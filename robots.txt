@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://bennylearnpython.github.io/sitemap.xml
