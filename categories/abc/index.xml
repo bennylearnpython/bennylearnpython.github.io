@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>我的第一篇博客</title>
-      <link>https://bennylearnpython.github.io/post/%E7%AC%AC%E4%B8%80%E7%AF%87/</link>
+      <title>使用docker来部署ss实现科学上网</title>
+      <link>https://bennylearnpython.github.io/post/20200326/</link>
       <pubDate>Mon, 16 Mar 2020 01:37:56 +0800</pubDate>
       
-      <guid>https://bennylearnpython.github.io/post/%E7%AC%AC%E4%B8%80%E7%AF%87/</guid>
-      <description>测试一下推送 这是标题 这里是内容</description>
+      <guid>https://bennylearnpython.github.io/post/20200326/</guid>
+      <description>准备 ###一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 ###系统的选择 一般来说价格便</description>
     </item>
     
   </channel>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>使用docker来部署ss实现科学上网 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="准备 一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 系统的选择 一般来说价格便宜的只有选l" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200326/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="使用docker来部署ss实现科学上网" />
+<meta property="og:description" content="准备 一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 系统的选择 一般来说价格便宜的只有选l" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200326/" />
+<meta property="article:published_time" content="2020-03-26T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-03-26T01:37:56+08:00" />
+<meta itemprop="name" content="使用docker来部署ss实现科学上网">
+<meta itemprop="description" content="准备 一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 系统的选择 一般来说价格便宜的只有选l">
+<meta itemprop="datePublished" content="2020-03-26T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-26T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="962">
+
+
+
+<meta itemprop="keywords" content="docker,ss,科学上网,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用docker来部署ss实现科学上网"/>
+<meta name="twitter:description" content="准备 一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 系统的选择 一般来说价格便宜的只有选l"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">使用docker来部署ss实现科学上网</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-26 </span>
+        <div class="post-category">
+            <a href="/categories/it/"> IT </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一台完美的跳转机">一台完美的跳转机</a></li>
+        <li><a href="#系统的选择">系统的选择</a></li>
+        <li><a href="#一些基础知识">一些基础知识</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#设置repostiory">设置repostiory</a></li>
+        <li><a href="#安装-docker-engine">安装 docker engine</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="准备">准备</h1>
+<h3 id="一台完美的跳转机">一台完美的跳转机</h3>
+<p>对于性能没有太大的需求，延迟越小越好，价格越低越好。
+这里不推荐了，避免不必要的麻烦。</p>
+<h3 id="系统的选择">系统的选择</h3>
+<p>一般来说价格便宜的只有选linux系统，centos，redhat都无所谓。</p>
+<h3 id="一些基础知识">一些基础知识</h3>
+<p>linux命令，docker命令，一些网络基础。</p>
+<h1 id="开始">开始</h1>
+<p>首先默认你已经有一台完美的跳转机，并且拿到了他的最高权限root。
+那么我们开始部署docker。</p>
+<blockquote>
+<p>docker对于centos的版本是有要求的，具体可以去docker网站上看下，一般centos7以上基本没什么问题。</p>
+</blockquote>
+<blockquote>
+<p>需要删除之前的遗留的老版本。</p>
+</blockquote>
+<h3 id="设置repostiory">设置repostiory</h3>
+<ol>
+<li>安装必要的包</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>设置repostiory</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="安装-docker-engine">安装 docker engine</h3>
+<ol>
+<li>用yum安装</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo yum install docker-ce docker-ce-cli containerd.io
+</code></pre></td></tr></table>
+</div>
+</div><p>我在安装的时候发生了一个报错如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">Error</span><span class="p">:</span>
+ <span class="nx">Problem</span><span class="p">:</span> <span class="kn">package</span> <span class="nx">docker</span><span class="o">-</span><span class="nx">ce</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mf">19.03.8</span><span class="o">-</span><span class="mf">3.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">requires</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span> <span class="o">&gt;=</span> <span class="mf">1.2.2</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="nx">but</span> <span class="nx">none</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">providers</span> <span class="nx">can</span> <span class="nx">be</span> <span class="nx">installed</span>
+  <span class="o">-</span> <span class="nx">cannot</span> <span class="nx">install</span> <span class="nx">the</span> <span class="nx">best</span> <span class="nx">candidate</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">job</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.10</span><span class="o">-</span><span class="mf">3.2</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.13</span><span class="o">-</span><span class="mf">3.1</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.2</span><span class="o">-</span><span class="mf">3.3</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.2</span><span class="o">-</span><span class="mf">3.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.4</span><span class="o">-</span><span class="mf">3.1</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.5</span><span class="o">-</span><span class="mf">3.1</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nx">excluded</span>
+  <span class="o">-</span> <span class="kn">package</span> <span class="nx">containerd</span><span class="p">.</span><span class="nx">io</span><span class="o">-</span><span class="mf">1.2.6</span><span class="o">-</span><span class="mf">3.3</span><span class="p">.</span><span class="nx">el7</span><span class="p">.</span><span class="nx">x86_64</span> <span class="nx">is</span> <span class="nf">excluded</span>
+<span class="p">(</span><span class="nx">try</span> <span class="nx">to</span> <span class="nx">add</span> <span class="err">&#39;</span><span class="o">--</span><span class="nx">skip</span><span class="o">-</span><span class="nx">broken</span><span class="err">&#39;</span> <span class="nx">to</span> <span class="nx">skip</span> <span class="nx">uninstallable</span> <span class="nx">packages</span> <span class="nx">or</span> <span class="err">&#39;</span><span class="o">--</span><span class="nx">nobest</span><span class="err">&#39;</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">not</span> <span class="nx">only</span> <span class="nx">best</span> <span class="nx">candidate</span> <span class="nx">packages</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><p>大概的意思就是containerd.io需要大于版本1.2.2-3，但是没有找到
+这里有两个办法处理，安装非最佳版本，使用&ndash;nobest参数可以继续安装，并且运行
+安装的版本是：containerd.io-1.2.0-3.el7.x86_64 
+想要完美过这里，建议独立安装高版本containerd.io,这里我用的是1.2.6</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">dnf install https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>启动docker进程</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">$ sudo systemctl start docker
+</code></pre></td></tr></table>
+</div>
+</div><p>参考：<a href="https://docs.docker.com/install/linux/docker-ce/centos/">centos install docker</a></p>
+<h1 id="用docker来启动ss">用docker来启动ss</h1>
+<p>直接一条命令搞定，docker会自动下载image并且启动。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">docker run -dt --name ss-server -p 6445:6445 mritd/shadowsocks -s &#34;-s 0.0.0.0 -p 6445 -m aes-256-cfb -k 123456test --fast-open&#34; --restart=always
+</code></pre></td></tr></table>
+</div>
+</div><p>这里来解释下参数的含义：
+-t  为容器重新分配一个伪输入终端，通常与 -i 同时使用；
+-d  后台运行容器，并返回容器ID；
+&ndash;name 为容器起名
+-p  6445：6445 把容器上的6445端口映射到宿主机的6445上[宿主机端口：容器端口]
+mritd/shadowsocks ss的镜像名
+-s 跟一些ss镜像特有的参数
+-s 0.0.0.0 限制源地址，0.0.0.0即是允许所有
+-p 6445 容器内部使用6445端口，这个可以自定义，这里变了之前的-p参数也要相应变化
+-m aes-256-cfb 使用加密的方式
+-k &lt;password&gt; 配置密钥
+&ndash;restart=always 容器退出后总是启动</p>
+<p>现在你的ss已经开始服务了，但是大概率这个时候还是连不上的</p>
+<h1 id="关闭防火墙">关闭防火墙</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">systemctl stop firewalld.service
+systemctl disable firewalld.service
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="科学上网">科学上网</h1>
+<p>下载ss客户端，填上相应的信息，开始上网吧</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-03-26
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/docker/">docker</a>
+          <a href="/tags/ss/">ss</a>
+          <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/">科学上网</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
