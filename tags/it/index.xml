@@ -13,19 +13,28 @@
     
     <item>
       <title>[MYSQL必知必会学习笔记]第一章:了解SQL</title>
-      <link>https://bennylearnpython.github.io/post/20200327/</link>
+      <link>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AB%A0/</link>
       <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
       
-      <guid>https://bennylearnpython.github.io/post/20200327/</guid>
+      <guid>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid>
       <description>由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣</description>
     </item>
     
     <item>
+      <title>[MYSQL必知必会学习笔记]第二章:MYSQL简介</title>
+      <link>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
+      <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid>
+      <description>第二章：MYSQL简介 什么是mysql mysql是一种DBMS， 是一种数据库软件 为什么大家都用mysql呢，基于以下几点： mysql是开源免</description>
+    </item>
+    
+    <item>
       <title>使用docker来部署ss实现科学上网</title>
-      <link>https://bennylearnpython.github.io/post/20200326/</link>
+      <link>https://bennylearnpython.github.io/post/20200326%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</link>
       <pubDate>Thu, 26 Mar 2020 01:37:56 +0800</pubDate>
       
-      <guid>https://bennylearnpython.github.io/post/20200326/</guid>
+      <guid>https://bennylearnpython.github.io/post/20200326%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</guid>
       <description>准备 一台完美的跳转机 对于性能没有太大的需求，延迟越小越好，价格越低越好。 这里不推荐了，避免不必要的麻烦。 系统的选择 一般来说价格便宜的只有选l</description>
     </item>
     

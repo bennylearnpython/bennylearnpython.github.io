@@ -13,11 +13,20 @@
     
     <item>
       <title>[MYSQL必知必会学习笔记]第一章:了解SQL</title>
-      <link>https://bennylearnpython.github.io/post/20200327/</link>
+      <link>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AB%A0/</link>
       <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
       
-      <guid>https://bennylearnpython.github.io/post/20200327/</guid>
+      <guid>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AB%A0/</guid>
       <description>由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣</description>
+    </item>
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第二章:MYSQL简介</title>
+      <link>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AB%A0/</link>
+      <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AB%A0/</guid>
+      <description>第二章：MYSQL简介 什么是mysql mysql是一种DBMS， 是一种数据库软件 为什么大家都用mysql呢，基于以下几点： mysql是开源免</description>
     </item>
     
   </channel>
