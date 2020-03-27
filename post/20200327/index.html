@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第一章:了解SQL - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200327/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第一章:了解SQL" />
+<meta property="og:description" content="由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200327/" />
+<meta property="article:published_time" content="2020-03-27T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-03-27T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第一章:了解SQL">
+<meta itemprop="description" content="由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣">
+<meta itemprop="datePublished" content="2020-03-27T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-27T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="916">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第一章:了解SQL"/>
+<meta name="twitter:description" content="由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第一章:了解SQL</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-27 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据库基础">数据库基础</a>
+      <ul>
+        <li><a href="#什么是数据库">什么是数据库</a></li>
+        <li><a href="#表">表</a></li>
+        <li><a href="#列和数据类型">列和数据类型</a></li>
+        <li><a href="#行">行</a></li>
+        <li><a href="#主键">主键</a></li>
+      </ul>
+    </li>
+    <li><a href="#什么是sql">什么是SQL</a></li>
+    <li><a href="#动手实践">动手实践</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p>由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。
+选取的是人民邮电出版社出版的《mysql必知必会》
+图书豆瓣链接：<a href="https://book.douban.com/subject/3354490/">mysql必知必会</a></p>
+<p><img src="https://s1.ax1x.com/2020/03/27/GCbC5t.png" alt="第一章思维导图"></p>
+<h1 id="第一章了解sql">第一章：了解SQL</h1>
+<h2 id="数据库基础">数据库基础</h2>
+<h3 id="什么是数据库">什么是数据库</h3>
+<p>数据库是一个以某种有组织的方式存储的数据集合。
+数据库软件：DBMS ，通过DBMS我们可以操作数据库</p>
+<h3 id="表">表</h3>
+<p>表是一种结构化的文件，可以用来存储某种特定类型的数据
+类似于，你在将资料放入文件柜中，不是随意摆放，而是通过分类，将资料放到指定的文件夹中，而这个文件夹在数据库中就是表的概念。
+表名具有唯一性，在同一个数据库中表名应该是唯一的。不同数据库可以使用相同表名。
+<strong>模式（schema）</strong> 关于数据库和表的布局以及特性的信息</p>
+<blockquote>
+<p>并不是很理解schema</p>
+</blockquote>
+<h3 id="列和数据类型">列和数据类型</h3>
+<p>表由列组成。列中又存储着表中某部分的信息
+<strong>列（column）</strong> 表中的一个字段，所有表是由一个或者多个列组成
+其实就是表格的概念，而列就是表格中的纵行，比如一个表存储着客户信息，那么他的列可能就是客户的编号，姓名，家庭住址，电话号码等等。
+数据库中每一列都应该有数据类型，比如如果一列中是数字则为数值类型，文字为字符串之类的。</p>
+<h3 id="行">行</h3>
+<p>表中的数据是按照行来存储的。水平行就是表行。
+<strong>行（row）</strong> 表中的一个记录</p>
+<h3 id="主键">主键</h3>
+<p>表中的每一行都应该有一个唯一可以标识自己的一列或者一组列，比如顾客可以是顾客编号，比如订单可以是订单的id。
+<strong>主键（primary key）</strong> 一列或者一组列，值可以唯一区分表中的每一行</p>
+<blockquote>
+<p>应该总是定义主键，确保每个表都有一个主键，以便于数据库的管理
+表中任何列都可以是主键，它需要满足以下两个要求：</p>
+</blockquote>
+<ol>
+<li>任何两行都不能具有相同的主键值</li>
+<li>每一行都必须具有一个主键值，主键值不能为null</li>
+</ol>
+<blockquote>
+<p>主键规则是mysql强制执行的
+如果主键定义成一组列，那么这一组列必须是唯一的，其中单个列可以不唯一。</p>
+</blockquote>
+<p><strong>主键最佳实践</strong></p>
+<ol>
+<li>不更新主键列中的值</li>
+<li>不重复用主键列的值</li>
+<li>不在主键列中用可能会修改的值</li>
+</ol>
+<h2 id="什么是sql">什么是SQL</h2>
+<p>SQL是结构化查询语言的缩写（Structured Query Language）
+是一种专门用来和数据库通讯的语言
+<strong>SQL优点</strong></p>
+<ol>
+<li>SQL是一个通用语言，并不是针对某个DBMS设计</li>
+<li>简单学习</li>
+<li>语法简单，但是功能强</li>
+</ol>
+<h2 id="动手实践">动手实践</h2>
+<p>需要自己安装mysql，会在另一篇中详细阐述。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-03-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/20200326/">
+            <span class="next-text nav-default">使用docker来部署ss实现科学上网</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

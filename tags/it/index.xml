@@ -6,10 +6,19 @@
     <description>Recent content in IT on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 26 Mar 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/tags/it/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第一章:了解SQL</title>
+      <link>https://bennylearnpython.github.io/post/20200327/</link>
+      <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200327/</guid>
+      <description>由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣</description>
+    </item>
     
     <item>
       <title>使用docker来部署ss实现科学上网</title>

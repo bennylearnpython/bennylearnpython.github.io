@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>[MYSQL必知必会学习笔记]第一章:了解SQL</title>
+      <link>https://bennylearnpython.github.io/post/20200327/</link>
+      <pubDate>Fri, 27 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200327/</guid>
+      <description>由于工作的原因最近在搭建mysql cluster， 顺便学习下数据库操作的基本知识。 选取的是人民邮电出版社出版的《mysql必知必会》 图书豆瓣</description>
+    </item>
+    
+    <item>
       <title>使用docker来部署ss实现科学上网</title>
       <link>https://bennylearnpython.github.io/post/20200326/</link>
       <pubDate>Thu, 26 Mar 2020 01:37:56 +0800</pubDate>
