@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第三章:使用MYSQL - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="使用MYSQL 在进入正题之前，为了后续的实验，需要安装一下mysql-server，目前最新版本是mysql8，按照官方文档 安装了一下，本来" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第三章:使用MYSQL" />
+<meta property="og:description" content="使用MYSQL 在进入正题之前，为了后续的实验，需要安装一下mysql-server，目前最新版本是mysql8，按照官方文档 安装了一下，本来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-03-27T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-03-27T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第三章:使用MYSQL">
+<meta itemprop="description" content="使用MYSQL 在进入正题之前，为了后续的实验，需要安装一下mysql-server，目前最新版本是mysql8，按照官方文档 安装了一下，本来">
+<meta itemprop="datePublished" content="2020-03-27T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-03-27T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="3017">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第三章:使用MYSQL"/>
+<meta name="twitter:description" content="使用MYSQL 在进入正题之前，为了后续的实验，需要安装一下mysql-server，目前最新版本是mysql8，按照官方文档 安装了一下，本来"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第三章:使用MYSQL</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-03-27 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#连接">连接</a></li>
+    <li><a href="#选择数据库">选择数据库</a></li>
+    <li><a href="#了解数据库和表">了解数据库和表</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="使用mysql">使用MYSQL</h1>
+<p>在进入正题之前，为了后续的实验，需要安装一下mysql-server，目前最新版本是mysql8，按照<a href="https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html#yum-repo-installing-mysql">官方文档</a> 安装了一下，本来想用docker方式的，后来觉得还是安装下比较好，可以熟悉下安装步骤。
+简单写一下安装步骤：</p>
+<ol>
+<li>下载repo
+我个人用的是centos7来做的安装。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>本地安装这个repo</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">yum localinstall mysql80-community-release-el7-3.noarch.rpm 
+</code></pre></td></tr></table>
+</div>
+</div><p>可以用命令检查一下repo的情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">yum repolist enabled | grep &#34;mysql.*-community.*&#34;
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>安装mysql server</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">yum install mysql-community-server
+
+</code></pre></td></tr></table>
+</div>
+</div><ol start="4">
+<li>启动mysql server</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">service mysqld start
+</code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>初始化mysql server
+通过/var/log/mysqld.log的日志，我们可以获取到一个临时密码</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost ~]# grep &#39;temporary password&#39; /var/log/mysqld.log
+2020-03-28T12:21:09.990415Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: ryN?tc5p*&amp;SA
+</code></pre></td></tr></table>
+</div>
+</div><p>使用root+temporary_password第一次登陆mysql server</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[root@localhost ~]# mysql -u root -p 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.19
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>修改初始密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;MyNewPass4!&#39;;
+</code></pre></td></tr></table>
+</div>
+</div><p>到这里初始化就完成了。</p>
+<h2 id="连接">连接</h2>
+<p>初始化完成后，通过mysql -u root -p 命令来进行本地连接已经没有问题了
+但是这里有个坑，就是远程连接的问题。
+有以下3个地方需要检查：</p>
+<ol>
+<li>本地防火墙问题</li>
+<li>检查mysql账户信息, 账户的host必须是%或者你需要用来连接的client端ip地址。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select host, user from mysql.user;
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| %         | benny            |
+| %         | root             |
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
++-----------+------------------+
+</code></pre></td></tr></table>
+</div>
+</div><p>如果有问题使用如下命令修改：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">update mysql.user set host = &#39;%&#39; where user = &#39;root&#39;;
+flush privileges;
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>修改root native password</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ALTER USER &#39;root&#39;@&#39;%&#39; IDENTIFIED WITH mysql_native_password BY &#39;root123&#39;;
+</code></pre></td></tr></table>
+</div>
+</div><p>完成之后就可以远程登陆。
+这里说明下mysql administrator工具是用来创建账户，管理权限之类的。
+而mysql query browser是用来访问数据库，查询数据的。</p>
+<p>为了连接到mysql，需要以下信息：</p>
+<ol>
+<li>主机名</li>
+<li>端口为3306</li>
+<li>用户名/密码</li>
+</ol>
+<h2 id="选择数据库">选择数据库</h2>
+<p>使用use关键字来切换数据库</p>
+<blockquote>
+<p><strong>关键字</strong> ：不要用关键字来定义表或者列</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>成功后返回Database changed</p>
+<p>必须先用use打开数据库，才能读取里面的数据</p>
+<h2 id="了解数据库和表">了解数据库和表</h2>
+<p>如果你不知道数据库的名字，可以用show databases 来显示数据库列表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+</code></pre></td></tr></table>
+</div>
+</div><p>通过show tables 可以获得数据库中表的列表,当然这里要先用use 来指定你想访问的数据库名称</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| columns_priv              |
+| component                 |
+| db                        |
+| default_roles             |
+| engine_cost               |
+| func                      |
+| general_log               |
+| global_grants             |
+| gtid_executed             |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| password_history          |
+| plugin                    |
+| procs_priv                |
+| proxies_priv              |
+| role_edges                |
+| server_cost               |
+| servers                   |
+| slave_master_info         |
+| slave_relay_log_info      |
+| slave_worker_info         |
+| slow_log                  |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| user                      |
++---------------------------+
+33 rows in set (0.00 sec)
+
+mysql&gt; 
+
+</code></pre></td></tr></table>
+</div>
+</div><p>使用show也可以显示表列. show columns 需要指定表明，使用from， 他会返回每一列的列名，类型是否允许为空，键信息，默认值和其他信息。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; show columns from user;
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Field                    | Type                              | Null | Key | Default               | Extra |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Host                     | char(255)                         | NO   | PRI |                       |       |
+| User                     | char(32)                          | NO   | PRI |                       |       |
+| Select_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Insert_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Update_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Delete_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Drop_priv                | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Reload_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Shutdown_priv            | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Process_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| File_priv                | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Grant_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| References_priv          | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Index_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Alter_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Show_db_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Super_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_tmp_table_priv    | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Lock_tables_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Execute_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Repl_slave_priv          | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Repl_client_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_view_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Show_view_priv           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_routine_priv      | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Alter_routine_priv       | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_user_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Event_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Trigger_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_tablespace_priv   | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| ssl_type                 | enum(&#39;&#39;,&#39;ANY&#39;,&#39;X509&#39;,&#39;SPECIFIED&#39;) | NO   |     |                       |       |
+| ssl_cipher               | blob                              | NO   |     | NULL                  |       |
+| x509_issuer              | blob                              | NO   |     | NULL                  |       |
+| x509_subject             | blob                              | NO   |     | NULL                  |       |
+| max_questions            | int unsigned                      | NO   |     | 0                     |       |
+| max_updates              | int unsigned                      | NO   |     | 0                     |       |
+| max_connections          | int unsigned                      | NO   |     | 0                     |       |
+| max_user_connections     | int unsigned                      | NO   |     | 0                     |       |
+| plugin                   | char(64)                          | NO   |     | caching_sha2_password |       |
+| authentication_string    | text                              | YES  |     | NULL                  |       |
+| password_expired         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| password_last_changed    | timestamp                         | YES  |     | NULL                  |       |
+| password_lifetime        | smallint unsigned                 | YES  |     | NULL                  |       |
+| account_locked           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_role_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Drop_role_priv           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Password_reuse_history   | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_reuse_time      | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_require_current | enum(&#39;N&#39;,&#39;Y&#39;)                     | YES  |     | NULL                  |       |
+| User_attributes          | json                              | YES  |     | NULL                  |       |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+51 rows in set (0.00 sec)
+
+</code></pre></td></tr></table>
+</div>
+</div><p>使用describe 是show columns from的快捷方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; describe user;
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Field                    | Type                              | Null | Key | Default               | Extra |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+| Host                     | char(255)                         | NO   | PRI |                       |       |
+| User                     | char(32)                          | NO   | PRI |                       |       |
+| Select_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Insert_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Update_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Delete_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Drop_priv                | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Reload_priv              | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Shutdown_priv            | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Process_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| File_priv                | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Grant_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| References_priv          | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Index_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Alter_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Show_db_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Super_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_tmp_table_priv    | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Lock_tables_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Execute_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Repl_slave_priv          | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Repl_client_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_view_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Show_view_priv           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_routine_priv      | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Alter_routine_priv       | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_user_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Event_priv               | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Trigger_priv             | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_tablespace_priv   | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| ssl_type                 | enum(&#39;&#39;,&#39;ANY&#39;,&#39;X509&#39;,&#39;SPECIFIED&#39;) | NO   |     |                       |       |
+| ssl_cipher               | blob                              | NO   |     | NULL                  |       |
+| x509_issuer              | blob                              | NO   |     | NULL                  |       |
+| x509_subject             | blob                              | NO   |     | NULL                  |       |
+| max_questions            | int unsigned                      | NO   |     | 0                     |       |
+| max_updates              | int unsigned                      | NO   |     | 0                     |       |
+| max_connections          | int unsigned                      | NO   |     | 0                     |       |
+| max_user_connections     | int unsigned                      | NO   |     | 0                     |       |
+| plugin                   | char(64)                          | NO   |     | caching_sha2_password |       |
+| authentication_string    | text                              | YES  |     | NULL                  |       |
+| password_expired         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| password_last_changed    | timestamp                         | YES  |     | NULL                  |       |
+| password_lifetime        | smallint unsigned                 | YES  |     | NULL                  |       |
+| account_locked           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Create_role_priv         | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Drop_role_priv           | enum(&#39;N&#39;,&#39;Y&#39;)                     | NO   |     | N                     |       |
+| Password_reuse_history   | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_reuse_time      | smallint unsigned                 | YES  |     | NULL                  |       |
+| Password_require_current | enum(&#39;N&#39;,&#39;Y&#39;)                     | YES  |     | NULL                  |       |
+| User_attributes          | json                              | YES  |     | NULL                  |       |
++--------------------------+-----------------------------------+------+-----+-----------------------+-------+
+51 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>看看其他的show语句：
+show status；用于显示服务器的状态，由于输出太长了，就不放出来了。
+show create database 和 show create table， 分别用来显示创建特定数据库或者表的mysql语句
+show grants for &lt;user&gt;;用来显示用户的安全权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; show grants for root;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for root@%                                                                                                                                                                                                                                                                                                                                                                                |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `root`@`%` WITH GRANT OPTION |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; show grants for benny@&#39;10.0.2.1&#39;;
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for benny@10.0.2.1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `benny`@`10.0.2.1` WITH GRANT OPTION                                                                                                           |
+| GRANT APPLICATION_PASSWORD_ADMIN,AUDIT_ADMIN,BACKUP_ADMIN,BINLOG_ADMIN,BINLOG_ENCRYPTION_ADMIN,CLONE_ADMIN,CONNECTION_ADMIN,ENCRYPTION_KEY_ADMIN,GROUP_REPLICATION_ADMIN,INNODB_REDO_LOG_ARCHIVE,PERSIST_RO_VARIABLES_ADMIN,REPLICATION_APPLIER,REPLICATION_SLAVE_ADMIN,RESOURCE_GROUP_ADMIN,RESOURCE_GROUP_USER,ROLE_ADMIN,SERVICE_CONNECTION_ADMIN,SESSION_VARIABLES_ADMIN,SET_USER_ID,SYSTEM_USER,SYSTEM_VARIABLES_ADMIN,TABLE_ENCRYPTION_ADMIN,XA_RECOVER_ADMIN ON *.* TO `benny`@`10.0.2.1` WITH GRANT OPTION |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>show errors 和 show warnings, 用来显示服务器错误和告警。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; show errors;
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Level | Code | Message                                                                                                                                                 |
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Error | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;error&#39; at line 1 |
++-------+------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; show warnings;
++-------+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Level | Code | Message                                                                                                                                                   |
++-------+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Error | 1064 | You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;warning&#39; at line 1 |
++-------+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><p>通过help命令可以开启帮助，万一你忘记了命令：）
+help show;
+help grant;
+诸如此类。</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-03-27
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[MYSQL必知必会学习笔记]第一章:了解SQL</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/20200327mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第二章:MYSQL简介</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
