@@ -6,10 +6,19 @@
     <description>Recent content in 学习笔记 on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 28 Mar 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 30 Mar 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第四章:检索数据</title>
+      <link>https://bennylearnpython.github.io/post/20200330mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AB%A0/</link>
+      <pubDate>Mon, 30 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200330mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AB%A0/</guid>
+      <description>检索数据 select语句 sql中最常用的语句，用途是从一个或者多个表中检索信息 使用select检索表数据，需要给出两个信息： 想要选择什么 从什</description>
+    </item>
     
     <item>
       <title>[MYSQL必知必会学习笔记]第三章:使用MYSQL</title>
