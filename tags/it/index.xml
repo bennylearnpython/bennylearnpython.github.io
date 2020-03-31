@@ -6,10 +6,19 @@
     <description>Recent content in IT on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 30 Mar 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 31 Mar 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/tags/it/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第五章:排序检索数据</title>
+      <link>https://bennylearnpython.github.io/post/20200331mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%94%E7%AB%A0/</link>
+      <pubDate>Tue, 31 Mar 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200331mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%94%E7%AB%A0/</guid>
+      <description>排序检索数据 使用select语句的order by子句，根据需要排序检索出数据 排序数据 关系数据库理论认为，如果不明确规定排序顺序，那么不应该假</description>
+    </item>
     
     <item>
       <title>[MYSQL必知必会学习笔记]第四章:检索数据</title>
