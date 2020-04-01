@@ -6,10 +6,19 @@
     <description>Recent content in 学习笔记 on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 31 Mar 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第六章:过滤数据</title>
+      <link>https://bennylearnpython.github.io/post/20200401mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AD%E7%AB%A0/</link>
+      <pubDate>Wed, 01 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200401mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AD%E7%AB%A0/</guid>
+      <description>过滤数据 使用where子句 数据库一般包含大量的数据，很少需要检索所有行 所以通过where子句来对数据进行条件过滤 感觉跟grep的作用相似。 1</description>
+    </item>
     
     <item>
       <title>[MYSQL必知必会学习笔记]第五章:排序检索数据</title>
