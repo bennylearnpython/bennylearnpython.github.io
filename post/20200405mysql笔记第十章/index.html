@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第十章:创建计算字段 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="创建计算字段 计算字段 存储在数据表中的数据，一般不是应用程序所需要的格式。 比如说 想在一个字段里面即显示公司名，又显示公司的地址。 城市，州，邮编" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第十章:创建计算字段" />
+<meta property="og:description" content="创建计算字段 计算字段 存储在数据表中的数据，一般不是应用程序所需要的格式。 比如说 想在一个字段里面即显示公司名，又显示公司的地址。 城市，州，邮编" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-05T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-05T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第十章:创建计算字段">
+<meta itemprop="description" content="创建计算字段 计算字段 存储在数据表中的数据，一般不是应用程序所需要的格式。 比如说 想在一个字段里面即显示公司名，又显示公司的地址。 城市，州，邮编">
+<meta itemprop="datePublished" content="2020-04-05T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-05T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="1468">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第十章:创建计算字段"/>
+<meta name="twitter:description" content="创建计算字段 计算字段 存储在数据表中的数据，一般不是应用程序所需要的格式。 比如说 想在一个字段里面即显示公司名，又显示公司的地址。 城市，州，邮编"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第十章:创建计算字段</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-05 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#计算字段">计算字段</a></li>
+    <li><a href="#拼接字段">拼接字段</a></li>
+    <li><a href="#执行算术计算">执行算术计算</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s1.ax1x.com/2020/04/06/GyzODH.png" alt="创建算数字段"></p>
+<h1 id="创建计算字段">创建计算字段</h1>
+<h2 id="计算字段">计算字段</h2>
+<p>存储在数据表中的数据，一般不是应用程序所需要的格式。
+比如说</p>
+<ol>
+<li>想在一个字段里面即显示公司名，又显示公司的地址。</li>
+<li>城市，州，邮编，在不同的表列里面，但是当你打印快递信息的时候，有需要他们在一个列中显示出来。</li>
+<li>列数据是大小写混合的，但是现在输出格式需要是全大写</li>
+<li>物品订单存储物品的价格和数量，但是现在需要总价格，即价格*数量</li>
+<li>需要根据数据得到总数，平均数等等。</li>
+</ol>
+<p>计算字段并不存在于数据库中，是运行时在select语句中创建的。
+<strong>字段</strong> 基本上和列的意思相同，在数据库中称为列，但是在计算字段中，称为字段</p>
+<h2 id="拼接字段">拼接字段</h2>
+<p>拼接，就是将两个列的值，拼在一起形成单个值</p>
+<blockquote>
+<p>mysql的不同， 多数DBMS用+或者||来实现拼接，但是mysql用concat（）函数来实现。</p>
+</blockquote>
+<p>利用select把name和help_topic_id 拼在一起。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select concat(name, &#39;[&#39;,help_topic_id,&#39;]&#39;) from help_topic order by help_topic_id limit 10;
++-------------------------------------+
+| concat(name, &#39;[&#39;,help_topic_id,&#39;]&#39;) |
++-------------------------------------+
+| HELP_DATE[0]                        |
+| HELP_VERSION[1]                     |
+| AUTO_INCREMENT[2]                   |
+| HELP COMMAND[3]                     |
+| TRUE[4]                             |
+| FALSE[5]                            |
+| BIT[6]                              |
+| TINYINT[7]                          |
+| BOOLEAN[8]                          |
+| SMALLINT[9]                         |
++-------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>Rtrim（）函数，用来删除数据右侧多余的空格。
+Ltrim（）函数，用来删除数据左侧多余的空格。
+trim（）函数，用来删除数据左右两侧多余空格。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select concat(rtrim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) from help_topic order by help_topic_id limit 10;
++--------------------------------------------+
+| concat(rtrim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) |
++--------------------------------------------+
+| HELP_DATE[0]                               |
+| HELP_VERSION[1]                            |
+| AUTO_INCREMENT[2]                          |
+| HELP COMMAND[3]                            |
+| TRUE[4]                                    |
+| FALSE[5]                                   |
+| BIT[6]                                     |
+| TINYINT[7]                                 |
+| BOOLEAN[8]                                 |
+| SMALLINT[9]                                |
++--------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql&gt; select concat(ltrim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) from help_topic order by help_topic_id limit 10; 
++--------------------------------------------+
+| concat(ltrim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) |
++--------------------------------------------+
+| HELP_DATE[0]                               |
+| HELP_VERSION[1]                            |
+| AUTO_INCREMENT[2]                          |
+| HELP COMMAND[3]                            |
+| TRUE[4]                                    |
+| FALSE[5]                                   |
+| BIT[6]                                     |
+| TINYINT[7]                                 |
+| BOOLEAN[8]                                 |
+| SMALLINT[9]                                |
++--------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql&gt; select concat(trim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) from help_topic order by help_topic_id limit 10; 
++-------------------------------------------+
+| concat(trim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) |
++-------------------------------------------+
+| HELP_DATE[0]                              |
+| HELP_VERSION[1]                           |
+| AUTO_INCREMENT[2]                         |
+| HELP COMMAND[3]                           |
+| TRUE[4]                                   |
+| FALSE[5]                                  |
+| BIT[6]                                    |
+| TINYINT[7]                                |
+| BOOLEAN[8]                                |
+| SMALLINT[9]                               |
++-------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>使用别名</strong>
+以上的输出，可以看到一个问题，就是被拼接的列明是一串命令，并不是一个名字，这里对于客户机不是很友好，我们可以通过别名来解决这个问题。
+看上去它像一个实际存在的列。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; select concat(trim(name), &#39;[&#39;,help_topic_id,&#39;]&#39;) as name_id from help_topic  order by help_topic_id limit 10;          
++-------------------+
+| name_id           |
++-------------------+
+| HELP_DATE[0]      |
+| HELP_VERSION[1]   |
+| AUTO_INCREMENT[2] |
+| HELP COMMAND[3]   |
+| TRUE[4]           |
+| FALSE[5]          |
+| BIT[6]            |
+| TINYINT[7]        |
+| BOOLEAN[8]        |
+| SMALLINT[9]       |
++-------------------+
+10 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="执行算术计算">执行算术计算</h2>
+<p>将两列进行算数计算，然后得出一个新列</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select help_category_id , name ,parent_category_id,help_category_id+parent_category_id as new_id from help_category;  
++------------------+---------------------------------------+--------------------+--------+
+| help_category_id | name                                  | parent_category_id | new_id |
++------------------+---------------------------------------+--------------------+--------+
+|                0 | Contents                              |                  0 |      0 |
+|                1 | Help Metadata                         |                  0 |      1 |
+|                2 | Data Types                            |                  0 |      2 |
+|                3 | Administration                        |                  0 |      3 |
+|                4 | Language Structure                    |                  0 |      4 |
+|                5 | Geographic Features                   |                  0 |      5 |
+|                6 | MBR                                   |                  5 |     11 |
+|                7 | WKT                                   |                  5 |     12 |
+|                8 | Functions                             |                  0 |      8 |
+|                9 | Comparison Operators                  |                  8 |     17 |
+|               10 | Logical Operators                     |                  8 |     18 |
+|               11 | Control Flow Functions                |                  8 |     19 |
+|               12 | String Functions                      |                  8 |     20 |
+|               13 | Numeric Functions                     |                  8 |     21 |
+|               14 | Date and Time Functions               |                  8 |     22 |
+|               15 | Bit Functions                         |                  8 |     23 |
+|               16 | Encryption Functions                  |                  8 |     24 |
+|               17 | Locking Functions                     |                  8 |     25 |
+|               18 | Information Functions                 |                  8 |     26 |
+|               19 | Spatial Functions                     |                  8 |     27 |
+|               20 | WKT Functions                         |                 19 |     39 |
+|               21 | WKB Functions                         |                 19 |     40 |
+|               22 | Geometry Constructors                 |                 19 |     41 |
+|               23 | Geometry Property Functions           |                 19 |     42 |
+|               24 | Point Property Functions              |                 19 |     43 |
+|               25 | LineString Property Functions         |                 19 |     44 |
+|               26 | Polygon Property Functions            |                 19 |     45 |
+|               27 | GeometryCollection Property Functions |                 19 |     46 |
+|               28 | Geometry Relation Functions           |                 19 |     47 |
+|               29 | MBR Functions                         |                 19 |     48 |
+|               30 | GROUP BY Functions and Modifiers      |                  8 |     38 |
+|               31 | Performance Schema Functions          |                  8 |     39 |
+|               32 | Miscellaneous Functions               |                  8 |     40 |
+|               33 | Data Definition                       |                  0 |     33 |
+|               34 | Data Manipulation                     |                  0 |     34 |
+|               35 | Transactions                          |                  0 |     35 |
+|               36 | Compound Statements                   |                  0 |     36 |
+|               37 | Account Management                    |                  0 |     37 |
+|               38 | Table Maintenance                     |                  0 |     38 |
+|               39 | User-Defined Functions                |                  0 |     39 |
+|               40 | Components                            |                  0 |     40 |
+|               41 | Plugins                               |                  0 |     41 |
+|               42 | Utility                               |                  0 |     42 |
+|               43 | Storage Engines                       |                  0 |     43 |
++------------------+---------------------------------------+--------------------+--------+
+44 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>算数运算操作符</strong>
+| 操作符        | 说明          | 
+| &mdash;&mdash;&ndash;   | &mdash;&mdash;&mdash;&ndash;   | 
+|    +      |    加   |<br>
+|   —      | 减    |<br>
+| *       | 乘     |<br>
+| /       | 除    |</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-05
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

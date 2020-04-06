@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索" />
+<meta property="og:description" content="正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-04T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-04T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索">
+<meta itemprop="description" content="正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的">
+<meta itemprop="datePublished" content="2020-04-04T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-04T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="2740">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索"/>
+<meta name="twitter:description" content="正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#使用mysql正则表达式">使用mysql正则表达式</a>
+      <ul>
+        <li><a href="#基本字符匹配">基本字符匹配</a></li>
+        <li><a href="#进行or匹配">进行OR匹配</a></li>
+        <li><a href="#匹配几个字符之一">匹配几个字符之一</a></li>
+        <li><a href="#匹配范围">匹配范围</a></li>
+        <li><a href="#匹配特殊字符">匹配特殊字符</a></li>
+        <li><a href="#匹配字符类">匹配字符类</a></li>
+        <li><a href="#匹配多个实例">匹配多个实例</a></li>
+        <li><a href="#定位符">定位符</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s1.ax1x.com/2020/04/06/GyxXt0.png" alt="正则表达式进行搜索"></p>
+<h1 id="正则表达式介绍">正则表达式介绍</h1>
+<p>正则表达式是用来匹配文本的特殊的串
+正则表达式是通用的。</p>
+<h2 id="使用mysql正则表达式">使用mysql正则表达式</h2>
+<blockquote>
+<p>mysql支持的正则表达式仅为正则表达式语言中的一个子集</p>
+</blockquote>
+<h3 id="基本字符匹配">基本字符匹配</h3>
+<p>类似于grep的功能，和like的区别是，like是完整匹配，而regexp是只要文本中存在就匹配</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name regexp &#39;sa&#39;;
++------------------------+---------------+
+| name                   | help_topic_id |
++------------------------+---------------+
+| INTERNAL_KEYS_DISABLED |           474 |
+| RELEASE SAVEPOINT      |           560 |
+| ROLLBACK TO SAVEPOINT  |           559 |
+| SAVEPOINT              |           558 |
+| SET TRANSACTION        |           563 |
+| START TRANSACTION      |           554 |
+| STDDEV_SAMP            |           431 |
+| VAR_SAMP               |           434 |
++------------------------+---------------+
+8 rows in set (0.01 sec)
+</code></pre></td></tr></table>
+</div>
+</div><p>用. 来匹配任意字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name regexp &#39;sq&#39;;
++-----------------------------------+---------------+
+| name                              | help_topic_id |
++-----------------------------------+---------------+
+| SET GLOBAL SQL_SLAVE_SKIP_COUNTER |           572 |
+| SET SQL_LOG_BIN                   |           568 |
+| SQRT                              |           168 |
+| WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS |           407 |
++-----------------------------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql&gt; select name, help_topic_id from help_topic where name regexp &#39;.sq&#39;;
++-----------------------------------+---------------+
+| name                              | help_topic_id |
++-----------------------------------+---------------+
+| SET GLOBAL SQL_SLAVE_SKIP_COUNTER |           572 |
+| SET SQL_LOG_BIN                   |           568 |
+| WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS |           407 |
++-----------------------------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="进行or匹配">进行OR匹配</h3>
+<p>为了搜索2个串之一， 用|,可以使用多个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name regexp &#39;.sq|ba&#39;;
++-----------------------------------+---------------+
+| name                              | help_topic_id |
++-----------------------------------+---------------+
+| ALTER DATABASE                    |           499 |
+| CAN_ACCESS_DATABASE               |           452 |
+| CREATE DATABASE                   |           510 |
+| DATABASE                          |           274 |
+| DROP DATABASE                     |           524 |
+| FROM_BASE64                       |            88 |
+| LOCK INSTANCE FOR BACKUP          |           561 |
+| ROLLBACK                          |           557 |
+| ROLLBACK TO SAVEPOINT             |           559 |
+| SET GLOBAL SQL_SLAVE_SKIP_COUNTER |           572 |
+| SET SQL_LOG_BIN                   |           568 |
+| SHOW CREATE DATABASE              |           638 |
+| SHOW DATABASES                    |           647 |
+| TO_BASE64                         |           119 |
+| WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS |           407 |
++-----------------------------------+---------------+
+15 rows in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="匹配几个字符之一">匹配几个字符之一</h3>
+<p>匹配特定字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id regexp &#39;[12]8&#39;;
++---------------------------------+---------------+
+| name                            | help_topic_id |
++---------------------------------+---------------+
+| BIT_AND                         |           418 |
+| CREATE SPATIAL REFERENCE SYSTEM |           518 |
+| DATEDIFF                        |           180 |
+| DATE_ADD                        |           181 |
+| DATE_FORMAT                     |           182 |
+| DATE_SUB                        |           183 |
+| DAY                             |           184 |
+| DAYNAME                         |           185 |
+| DAYOFMONTH                      |           186 |
+| DAYOFWEEK                       |           187 |
+| DAYOFYEAR                       |           188 |
+| DOUBLE PRECISION                |            18 |
+| DROP PROCEDURE                  |           528 |
+| EXTRACT                         |           189 |
+| NOT REGEXP                      |           128 |
+| REPAIR TABLE                    |           618 |
+| SCHEMA                          |           280 |
+| SESSION_USER                    |           281 |
+| SET CHARSET                     |           628 |
+| STD                             |           428 |
+| ST_AREA                         |           328 |
+| ST_GEOMCOLLFROMTEXT             |           285 |
+| ST_GEOMFROMTEXT                 |           286 |
+| ST_LATITUDE                     |           318 |
+| ST_LINEFROMTEXT                 |           287 |
+| ST_MLINEFROMTEXT                |           288 |
+| ST_MPOINTFROMTEXT               |           289 |
+| SUBSTRING_INDEX                 |           118 |
+| SYSTEM_USER                     |           282 |
+| TIME_FORMAT                     |           218 |
+| USER                            |           283 |
+| VARBINARY                       |            28 |
+| VERSION                         |           284 |
+| WEEKOFYEAR                      |           228 |
++---------------------------------+---------------+
+34 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>用^来取反</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id regexp &#39;[^12]8&#39;; 
++-------------------------+---------------+
+| name                    | help_topic_id |
++-------------------------+---------------+
+| &amp;                       |           238 |
+| -&gt;                      |           378 |
+| /                       |           138 |
+| &lt;=                      |            48 |
+| ALTER TABLESPACE        |           508 |
+| ASYMMETRIC_DECRYPT      |           408 |
+| BIN_TO_UUID             |           480 |
+| CALL                    |           538 |
+| CASE STATEMENT          |           582 |
+| CHAR FUNCTION           |            78 |
+| CHARSET                 |           268 |
+| CONV                    |           148 |
+| CURTIME                 |           178 |
+| DAYOFYEAR               |           188 |
+| DECLARE VARIABLE        |           581 |
+| DEFAULT                 |           481 |
+| DESC                    |           686 |
+| DESCRIBE                |           685 |
+| DES_DECRYPT             |           248 |
+| DROP PREPARE            |           578 |
+| EXPLAIN                 |           684 |
+| FIRST_VALUE             |           438 |
+| FORMAT_PICO_TIME        |           448 |
+| FROM_BASE64             |            88 |
+| GROUPING                |           482 |
+| HELP STATEMENT          |           687 |
+| IF STATEMENT            |           583 |
+| INET6_ATON              |           485 |
+| INET6_NTOA              |           486 |
+| INET_ATON               |           483 |
+| INET_NTOA               |           484 |
+| INTERNAL_AUTO_INCREMENT |           458 |
+| INTERNAL_GET_USERNAME   |           468 |
+| INTERVAL                |            58 |
+| IS_IPV4                 |           487 |
+| IS_IPV4_COMPAT          |           488 |
+| IS_IPV4_MAPPED          |           489 |
+| IS_VISIBLE_DD_OBJECT    |           478 |
+| ITERATE                 |           584 |
+| JSON_ARRAY_APPEND       |           384 |
+| JSON_ARRAY_INSERT       |           385 |
+| JSON_INSERT             |           386 |
+| JSON_KEYS               |           380 |
+| JSON_MERGE              |           387 |
+| JSON_MERGE_PATCH()      |           388 |
+| JSON_MERGE_PRESERVE()   |           389 |
+| JSON_OVERLAPS           |           381 |
+| JSON_SEARCH             |           382 |
+| JSON_TABLE              |           398 |
+| KILL                    |           678 |
+| LABELS                  |           580 |
+| LEAVE                   |           585 |
+| LOG10                   |           158 |
+| LOOP                    |           586 |
+| LPAD                    |            98 |
+| MAKETIME                |           198 |
+| MBROVERLAPS             |           358 |
+| MEMBER OF               |           383 |
+| MERGE                   |           689 |
+| POLYGON                 |           308 |
+| REPEAT LOOP             |           587 |
+| REPLACE                 |           548 |
+| REPLACE FUNCTION        |           108 |
+| RESET                   |           680 |
+| RESET PERSIST           |           681 |
+| RESTART                 |           682 |
+| RETURN                  |           588 |
+| ROLES_GRAPHML           |           278 |
+| SAVEPOINT               |           558 |
+| SEC_TO_TIME             |           208 |
+| SET DATA TYPE           |            38 |
+| SET PASSWORD            |           608 |
+| SET SQL_LOG_BIN         |           568 |
+| SHOW CREATE DATABASE    |           638 |
+| SHOW OPEN TABLES        |           658 |
+| SHOW SCHEMAS            |           648 |
+| SHOW SLAVE STATUS       |           668 |
+| SHUTDOWN                |           683 |
+| SIGNAL                  |           598 |
+| SQRT                    |           168 |
+| STATEMENT_DIGEST_TEXT   |           258 |
+| ST_DIFFERENCE           |           338 |
+| ST_INTERSECTS           |           348 |
+| ST_ISVALID              |           368 |
+| ST_MLINEFROMTEXT        |           288 |
+| ST_MPOLYFROMWKB         |           298 |
+| USE                     |           688 |
+| VALUES                  |           498 |
+| WHILE                   |           589 |
+| XOR                     |            68 |
++-------------------------+---------------+
+90 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="匹配范围">匹配范围</h3>
+<p>用[0-9]来匹配任意数字，[a-z]匹配任意字母</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id regexp &#39;[0-9]88&#39;;
++--------------------+---------------+
+| name               | help_topic_id |
++--------------------+---------------+
+| DAYOFYEAR          |           188 |
+| IS_IPV4_COMPAT     |           488 |
+| JSON_MERGE_PATCH() |           388 |
+| RETURN             |           588 |
+| ST_MLINEFROMTEXT   |           288 |
+| USE                |           688 |
++--------------------+---------------+
+6 rows in set (0.01 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="匹配特殊字符">匹配特殊字符</h3>
+<p>因为在正则表达式里面 . |_都有特殊含义，如果要搜索一个. 就要用转义</p>
+<p>通过\反斜杠来转义</p>
+<h3 id="匹配字符类">匹配字符类</h3>
+<p>存在找出你自己经常使用的数字，所有字母字符或者所有数字字母
+字符类</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[:alnum:]</td>
+<td>任意字母和数字等同[a-zA-Z0-9]</td>
+</tr>
+<tr>
+<td>[:alpha:]</td>
+<td>任意字符等同于[a-zA-Z]</td>
+</tr>
+<tr>
+<td>[:blank:]</td>
+<td>空格和制表同[\t]</td>
+</tr>
+<tr>
+<td>[:cntrl:]</td>
+<td>ASCII控制字符</td>
+</tr>
+<tr>
+<td>[:digit:]</td>
+<td>任意数字</td>
+</tr>
+<tr>
+<td>[:graph:]</td>
+<td>与[:print:]相同，但不包括空格</td>
+</tr>
+<tr>
+<td>[:lower:]</td>
+<td>任意小写字母</td>
+</tr>
+<tr>
+<td>[:print:]</td>
+<td>任意可打印字符</td>
+</tr>
+<tr>
+<td>[:punct:]</td>
+<td>不在 [:alnum:] 也不在 [:cntrl:] 的字符</td>
+</tr>
+<tr>
+<td>[:space:]</td>
+<td>包括空格在内的任意空白字符 同\f \n \r \t \v</td>
+</tr>
+<tr>
+<td>[:upper:]</td>
+<td>任意大写字母</td>
+</tr>
+<tr>
+<td>[:xdigit:]</td>
+<td>任意十六进制数字</td>
+</tr>
+</tbody>
+</table>
+<h3 id="匹配多个实例">匹配多个实例</h3>
+<p>多次匹配或者组合匹配
+<strong>重复元字符</strong>
+| 元字符          | 说明          | 
+| &mdash;&mdash;&ndash;   | &mdash;&mdash;&mdash;&ndash;   | 
+|    *     |    0个或多个匹配     |<br>
+|    +      | 1个或多个匹配     |<br>
+| ?      | 0个或1个匹配     |<br>
+| {n}      | 指定数目的匹配     |<br>
+| {n,}     | 不少于指定数目的范围    |<br>
+| {n,m}       | 匹配数目的范围      |</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id regexp &#39;[:digit:]{3}&#39; order by help_topic_id;
+</code></pre></td></tr></table>
+</div>
+</div><p>解释下是指，任意的3个数字，注意这里如果有超过3位数字，也会被列出来的。</p>
+<h3 id="定位符">定位符</h3>
+<p>为了匹配特定位置的文本，所以有了定位符</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^</td>
+<td>文本开始</td>
+</tr>
+<tr>
+<td>$</td>
+<td>文本结尾</td>
+</tr>
+<tr>
+<td>[[:&lt;]]</td>
+<td>词的开始</td>
+</tr>
+<tr>
+<td>[[:&gt;]]</td>
+<td>词的结尾</td>
+</tr>
+</tbody>
+</table>
+<p>例子用^来列出开头为1的行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id REGEXP &#39;^[1]&#39;;
++-------------------+---------------+
+| name              | help_topic_id |
++-------------------+---------------+
+| %                 |           140 |
+| *                 |           137 |
+| +                 |           134 |
+| - BINARY          |           135 |
+| - UNARY           |           136 |
+| /                 |           138 |
+| ABS               |           141 |
+| ACOS              |           142 |
+| ADDDATE           |           171 |
+| ADDTIME           |           172 |
+| ASIN              |           143 |
+| ATAN              |           144 |
+| ATAN2             |           145 |
+| BIGINT            |            13 |
+| CEIL              |           146 |
+| CEILING           |           147 |
+| CONV              |           148 |
+| CONVERT_TZ        |           173 |
+| COS               |           149 |
+| COT               |           150 |
+| CRC32             |           151 |
+| CURDATE           |           174 |
+| CURRENT_DATE      |           175 |
+| CURRENT_TIME      |           176 |
+| CURRENT_TIMESTAMP |           177 |
+| CURTIME           |           178 |
+| DATE              |            19 |
+| DATE FUNCTION     |           179 |
+| DATEDIFF          |           180 |
+| DATE_ADD          |           181 |
+| DATE_FORMAT       |           182 |
+| DATE_SUB          |           183 |
+| DAY               |           184 |
+| DAYNAME           |           185 |
+| DAYOFMONTH        |           186 |
+| DAYOFWEEK         |           187 |
+| DAYOFYEAR         |           188 |
+| DEC               |            15 |
+| DECIMAL           |            14 |
+| DEGREES           |           152 |
+| DIV               |           139 |
+| DOUBLE            |            17 |
+| DOUBLE PRECISION  |            18 |
+| EXP               |           153 |
+| EXTRACT           |           189 |
+| FLOAT             |            16 |
+| FLOOR             |           154 |
+| FROM_DAYS         |           190 |
+| FROM_UNIXTIME     |           191 |
+| GET_FORMAT        |           192 |
+| HELP_VERSION      |             1 |
+| HOUR              |           193 |
+| INT               |            11 |
+| INTEGER           |            12 |
+| LAST_DAY          |           194 |
+| LIKE              |           125 |
+| LN                |           155 |
+| LOCALTIME         |           195 |
+| LOCALTIMESTAMP    |           196 |
+| LOG               |           156 |
+| LOG10             |           158 |
+| LOG2              |           157 |
+| MAKEDATE          |           197 |
+| MAKETIME          |           198 |
+| MAKE_SET          |           100 |
+| MEDIUMINT         |            10 |
+| MICROSECOND       |           199 |
+| MID               |           101 |
+| MOD               |           159 |
+| NOT LIKE          |           126 |
+| NOT REGEXP        |           128 |
+| OCT               |           102 |
+| OCTET_LENGTH      |           103 |
+| ORD               |           104 |
+| PI                |           160 |
+| POSITION          |           105 |
+| POW               |           161 |
+| POWER             |           162 |
+| QUOTE             |           106 |
+| RADIANS           |           163 |
+| RAND              |           164 |
+| REGEXP            |           129 |
+| REGEXP_INSTR      |           130 |
+| REGEXP_LIKE       |           131 |
+| REGEXP_REPLACE    |           132 |
+| REGEXP_SUBSTR     |           133 |
+| REPEAT FUNCTION   |           107 |
+| REPLACE FUNCTION  |           108 |
+| REVERSE           |           109 |
+| RIGHT             |           110 |
+| ROUND             |           165 |
+| RPAD              |           111 |
+| RTRIM             |           112 |
+| SIGN              |           166 |
+| SIN               |           167 |
+| SOUNDEX           |           113 |
+| SOUNDS LIKE       |           114 |
+| SPACE             |           115 |
+| SQRT              |           168 |
+| STRCMP            |           127 |
+| SUBSTR            |           116 |
+| SUBSTRING         |           117 |
+| SUBSTRING_INDEX   |           118 |
+| TAN               |           169 |
+| TO_BASE64         |           119 |
+| TRIM              |           120 |
+| TRUNCATE          |           170 |
+| UCASE             |           121 |
+| UNHEX             |           122 |
+| UPPER             |           123 |
+| WEIGHT_STRING     |           124 |
++-------------------+---------------+
+111 rows in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>让regexp起到like的作用 用^开头，$结尾可以起到like一样的作用。</p>
+</blockquote>
+<p>可以在不使用数据库的情况下用select来测试正则表达式，相应的语法如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select &#39;hello&#39; REGEXP &#39;[0-9]&#39;
+    -&gt; ;
++------------------------+
+| &#39;hello&#39; REGEXP &#39;[0-9]&#39; |
++------------------------+
+|                      0 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; select &#39;hello&#39; REGEXP &#39;^h&#39;
+    -&gt; ;
++---------------------+
+| &#39;hello&#39; REGEXP &#39;^h&#39; |
++---------------------+
+|                   1 |
++---------------------+
+1 row in set (0.01 sec)
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-04
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[MYSQL必知必会学习笔记]第十章:创建计算字段</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第八章:用通配符进行过滤</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

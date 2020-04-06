@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第八章:用通配符进行过滤 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="用通配符进行过滤 介绍什么是通配符，如何使用。 LIKE操作符 之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name=" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第八章:用通配符进行过滤" />
+<meta property="og:description" content="用通配符进行过滤 介绍什么是通配符，如何使用。 LIKE操作符 之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name=" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-03T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-03T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第八章:用通配符进行过滤">
+<meta itemprop="description" content="用通配符进行过滤 介绍什么是通配符，如何使用。 LIKE操作符 之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name=">
+<meta itemprop="datePublished" content="2020-04-03T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-03T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="1162">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第八章:用通配符进行过滤"/>
+<meta name="twitter:description" content="用通配符进行过滤 介绍什么是通配符，如何使用。 LIKE操作符 之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name="/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第八章:用通配符进行过滤</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-03 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#like操作符">LIKE操作符</a>
+      <ul>
+        <li><a href="#百分号-通配符">百分号% 通配符</a></li>
+        <li><a href="#下划线-_-通配符">下划线 _ 通配符</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用通配符的技巧">使用通配符的技巧</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s1.ax1x.com/2020/04/01/G8BxSA.png" alt="用通配符进行过滤"></p>
+<h1 id="用通配符进行过滤">用通配符进行过滤</h1>
+<p>介绍什么是通配符，如何使用。</p>
+<h2 id="like操作符">LIKE操作符</h2>
+<p>之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name=‘data’，如果你只知道字符串的一部分呢，比如你想匹配出name中包含‘bag’的行，这里就要用到LIKE</p>
+<p><strong>通配符</strong> 用来匹配值的一部分特殊字符</p>
+<p><strong>搜索模式</strong> 由字面值 通配符或两者组合构成的搜索条件</p>
+<p>通配符本身实际是sql的where子句中有特殊含义的字符。</p>
+<h3 id="百分号-通配符">百分号% 通配符</h3>
+<p>%代表任何字符出现任意次数。类似于*的作用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name like &#39;UN%&#39;;
++---------------------+---------------+
+| name                | help_topic_id |
++---------------------+---------------+
+| UNCOMPRESS          |           259 |
+| UNCOMPRESSED_LENGTH |           260 |
+| UNHEX               |           122 |
+| UNINSTALL COMPONENT |           623 |
+| UNINSTALL PLUGIN    |           624 |
+| UNION               |           552 |
+| UNIX_TIMESTAMP      |           222 |
++---------------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>要注意的是，这里是like之后的字符串不区分大小写的。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name like &#39;un%&#39;;
++---------------------+---------------+
+| name                | help_topic_id |
++---------------------+---------------+
+| UNCOMPRESS          |           259 |
+| UNCOMPRESSED_LENGTH |           260 |
+| UNHEX               |           122 |
+| UNINSTALL COMPONENT |           623 |
+| UNINSTALL PLUGIN    |           624 |
+| UNION               |           552 |
+| UNIX_TIMESTAMP      |           222 |
++---------------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>通配符可以使用多个</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name like &#39;%un%&#39;;
++-----------------------------------+---------------+
+| name                              | help_topic_id |
++-----------------------------------+---------------+
+| - UNARY                           |           136 |
+| ALTER FUNCTION                    |           502 |
+| BIT_COUNT                         |           243 |
+| CHAR FUNCTION                     |            78 |
+| COUNT                             |           421 |
+| COUNT DISTINCT                    |           422 |
+| CREATE FUNCTION                   |           516 |
+| CREATE FUNCTION UDF               |           619 |
+| DATE FUNCTION                     |           179 |
+| DROP FUNCTION                     |           529 |
+| DROP FUNCTION UDF                 |           620 |
+| FOUND_ROWS                        |           275 |
+| FROM_UNIXTIME                     |           191 |
+| IF FUNCTION                       |            72 |
+| INSERT FUNCTION                   |            90 |
+| JSON_UNQUOTE                      |           393 |
+| REPEAT FUNCTION                   |           107 |
+| REPLACE FUNCTION                  |           108 |
+| ROUND                             |           165 |
+| ROW_COUNT                         |           279 |
+| SET GLOBAL SQL_SLAVE_SKIP_COUNTER |           572 |
+| SHOW CREATE FUNCTION              |           641 |
+| SHOW FUNCTION CODE                |           653 |
+| SHOW FUNCTION STATUS              |           654 |
+| SOUNDEX                           |           113 |
+| SOUNDS LIKE                       |           114 |
+| ST_UNION                          |           342 |
+| TIME FUNCTION                     |           213 |
+| TIMESTAMP FUNCTION                |           215 |
+| TRUNCATE                          |           170 |
+| TRUNCATE TABLE                    |           537 |
+| UNCOMPRESS                        |           259 |
+| UNCOMPRESSED_LENGTH               |           260 |
+| UNHEX                             |           122 |
+| UNINSTALL COMPONENT               |           623 |
+| UNINSTALL PLUGIN                  |           624 |
+| UNION                             |           552 |
+| UNIX_TIMESTAMP                    |           222 |
+| WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS |           407 |
++-----------------------------------+---------------+
+39 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以用在中间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where name like &#39;u%n&#39;;
++------------------+---------------+
+| name             | help_topic_id |
++------------------+---------------+
+| UNINSTALL PLUGIN |           624 |
+| UNION            |           552 |
+| UUID_TO_BIN      |           497 |
++------------------+---------------+
+3 rows in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>%无法匹配到null的行</p>
+</blockquote>
+<h3 id="下划线-_-通配符">下划线 _ 通配符</h3>
+<p>匹配单个字符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; select name, help_topic_id from help_topic where name like &#39;_IT__R&#39;;
++--------+---------------+
+| name   | help_topic_id |
++--------+---------------+
+| BIT_OR |           419 |
++--------+---------------+
+1 row in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>可以和%一起组合使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; select name, help_topic_id from help_topic where name like &#39;%s_T%&#39;;
++-----------------------------------+---------------+
+| name                              | help_topic_id |
++-----------------------------------+---------------+
+| CAN_ACCESS_TABLE                  |           453 |
+| CHARSET                           |           268 |
+| EXPORT_SET                        |            84 |
+| FIND_IN_SET                       |            86 |
+| GTID_SUBSET                       |           404 |
+| JSON_SET                          |           392 |
+| MAKE_SET                          |           100 |
+| POSITION                          |           105 |
+| PS_THREAD_ID                      |           450 |
+| RESET                             |           680 |
+| RESET MASTER                      |           567 |
+| RESET PERSIST                     |           681 |
+| RESET SLAVE                       |           571 |
+| SET                               |           626 |
+| SET CHARACTER SET                 |           627 |
+| SET CHARSET                       |           628 |
+| SET DATA TYPE                     |            38 |
+| SET DEFAULT ROLE                  |           607 |
+| SET GLOBAL SQL_SLAVE_SKIP_COUNTER |           572 |
+| SET NAMES                         |           629 |
+| SET PASSWORD                      |           608 |
+| SET RESOURCE GROUP                |           613 |
+| SET ROLE                          |           609 |
+| SET SQL_LOG_BIN                   |           568 |
+| SET TRANSACTION                   |           563 |
+| SHOW CHARACTER SET                |           634 |
+| WAIT_FOR_EXECUTED_GTID_SET        |           406 |
++-----------------------------------+---------------+
+27 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="使用通配符的技巧">使用通配符的技巧</h2>
+<p>通配符很有用，但是付出的代价就是通配符的处理会比前面那些简单的搜索来的慢。</p>
+<ol>
+<li>不要过度使用通配符，如果普通的匹配可以的话，应该优先用普通的匹配</li>
+<li>除非必要，不要把通配符用在搜索模式的开始处</li>
+<li>仔细检查通配符的位置</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-03
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第七章:数据过滤</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

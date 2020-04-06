@@ -6,10 +6,46 @@
     <description>Recent content in 学习笔记 on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Apr 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第十章:创建计算字段</title>
+      <link>https://bennylearnpython.github.io/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/</link>
+      <pubDate>Sun, 05 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/</guid>
+      <description>创建计算字段 计算字段 存储在数据表中的数据，一般不是应用程序所需要的格式。 比如说 想在一个字段里面即显示公司名，又显示公司的地址。 城市，州，邮编</description>
+    </item>
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第九章:正则表达式进行搜索</title>
+      <link>https://bennylearnpython.github.io/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/</link>
+      <pubDate>Sat, 04 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200404mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B9%9D%E7%AB%A0/</guid>
+      <description>正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的</description>
+    </item>
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第八章:用通配符进行过滤</title>
+      <link>https://bennylearnpython.github.io/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/</link>
+      <pubDate>Fri, 03 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/</guid>
+      <description>用通配符进行过滤 介绍什么是通配符，如何使用。 LIKE操作符 之前的操作符都是通过已知的值来匹配，比如你知道要匹配小于3的，或者你知道name=</description>
+    </item>
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第七章:数据过滤</title>
+      <link>https://bennylearnpython.github.io/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/</link>
+      <pubDate>Thu, 02 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/</guid>
+      <description>数据过滤 第六章讲了一些where的基本用法，这章讲一些where的高级用法。 组合where子句 mysql允许多个子句，这些子句可以两种方式使</description>
+    </item>
     
     <item>
       <title>[MYSQL必知必会学习笔记]第六章:过滤数据</title>

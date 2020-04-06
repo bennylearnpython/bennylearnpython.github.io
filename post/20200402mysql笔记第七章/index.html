@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>[MYSQL必知必会学习笔记]第六章:过滤数据 - Benny&#39;s BLOG</title>
+  <title>[MYSQL必知必会学习笔记]第七章:数据过滤 - Benny&#39;s BLOG</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="Benny" /><meta name="description" content="过滤数据 使用where子句 数据库一般包含大量的数据，很少需要检索所有行 所以通过where子句来对数据进行条件过滤 感觉跟grep的作用相似。 1" /><meta name="keywords" content="Hugo, theme, even" />
+<meta name="author" content="Benny" /><meta name="description" content="数据过滤 第六章讲了一些where的基本用法，这章讲一些where的高级用法。 组合where子句 mysql允许多个子句，这些子句可以两种方式使" /><meta name="keywords" content="Hugo, theme, even" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.68.3 with theme even" />
 
 
-<link rel="canonical" href="https://bennylearnpython.github.io/post/20200401mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,23 +38,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="[MYSQL必知必会学习笔记]第六章:过滤数据" />
-<meta property="og:description" content="过滤数据 使用where子句 数据库一般包含大量的数据，很少需要检索所有行 所以通过where子句来对数据进行条件过滤 感觉跟grep的作用相似。 1" />
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第七章:数据过滤" />
+<meta property="og:description" content="数据过滤 第六章讲了一些where的基本用法，这章讲一些where的高级用法。 组合where子句 mysql允许多个子句，这些子句可以两种方式使" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bennylearnpython.github.io/post/20200401mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AD%E7%AB%A0/" />
-<meta property="article:published_time" content="2020-04-01T01:37:56+08:00" />
-<meta property="article:modified_time" content="2020-04-01T01:37:56+08:00" />
-<meta itemprop="name" content="[MYSQL必知必会学习笔记]第六章:过滤数据">
-<meta itemprop="description" content="过滤数据 使用where子句 数据库一般包含大量的数据，很少需要检索所有行 所以通过where子句来对数据进行条件过滤 感觉跟grep的作用相似。 1">
-<meta itemprop="datePublished" content="2020-04-01T01:37:56&#43;08:00" />
-<meta itemprop="dateModified" content="2020-04-01T01:37:56&#43;08:00" />
-<meta itemprop="wordCount" content="1061">
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-02T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-02T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第七章:数据过滤">
+<meta itemprop="description" content="数据过滤 第六章讲了一些where的基本用法，这章讲一些where的高级用法。 组合where子句 mysql允许多个子句，这些子句可以两种方式使">
+<meta itemprop="datePublished" content="2020-04-02T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-02T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="1223">
 
 
 
 <meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第六章:过滤数据"/>
-<meta name="twitter:description" content="过滤数据 使用where子句 数据库一般包含大量的数据，很少需要检索所有行 所以通过where子句来对数据进行条件过滤 感觉跟grep的作用相似。 1"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第七章:数据过滤"/>
+<meta name="twitter:description" content="数据过滤 第六章讲了一些where的基本用法，这章讲一些where的高级用法。 组合where子句 mysql允许多个子句，这些子句可以两种方式使"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -121,10 +121,10 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">[MYSQL必知必会学习笔记]第六章:过滤数据</h1>
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第七章:数据过滤</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-04-01 </span>
+        <span class="post-time"> 2020-04-02 </span>
         <div class="post-category">
             <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
             </div>
@@ -137,26 +137,173 @@
   <div class="post-toc-content always-active">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#使用where子句">使用where子句</a></li>
-    <li><a href="#where子句操作符">where子句操作符</a>
+    <li><a href="#组合where子句">组合where子句</a>
       <ul>
-        <li><a href="#检查单个值">检查单个值</a></li>
-        <li><a href="#不匹配检查">不匹配检查</a></li>
-        <li><a href="#检索一定范围">检索一定范围</a></li>
-        <li><a href="#检查空值">检查空值</a></li>
+        <li><a href="#and操作符">AND操作符</a></li>
+        <li><a href="#or操作符">OR操作符</a></li>
+        <li><a href="#计算次序">计算次序</a></li>
       </ul>
     </li>
+    <li><a href="#in操作符">IN操作符</a></li>
+    <li><a href="#not操作符">NOT操作符</a></li>
   </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      <p><img src="https://s1.ax1x.com/2020/03/31/GKtdtU.png" alt="过滤数据"></p>
-<h1 id="过滤数据">过滤数据</h1>
-<h2 id="使用where子句">使用where子句</h2>
-<p>数据库一般包含大量的数据，很少需要检索所有行
-所以通过where子句来对数据进行条件过滤
-感觉跟grep的作用相似。</p>
+      <p><img src="https://s1.ax1x.com/2020/04/01/G1v0z9.png" alt="数据过滤"></p>
+<h1 id="数据过滤">数据过滤</h1>
+<p>第六章讲了一些where的基本用法，这章讲一些where的高级用法。</p>
+<h2 id="组合where子句">组合where子句</h2>
+<p>mysql允许多个子句，这些子句可以两种方式使用：and 或 or
+类似于连接两个判断条件，很好理解</p>
+<h3 id="and操作符">AND操作符</h3>
+<p>用and操作符来连接的意思是并且的意思，义为help_topic_id &lt; 10 并且name是help_date的行。
+可以连接多个and，加入多个判断条件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id &lt; 10 and name = &#39;help_date&#39; ;
++-----------+---------------+
+| name      | help_topic_id |
++-----------+---------------+
+| HELP_DATE |             0 |
++-----------+---------------+
+1 row in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="or操作符">OR操作符</h3>
+<p>or的作用是匹配任何一条件的行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; select name, help_topic_id from help_topic where help_topic_id &lt; 10 or name = &#39;date&#39; ;        
++----------------+---------------+
+| name           | help_topic_id |
++----------------+---------------+
+| HELP_DATE      |             0 |
+| HELP_VERSION   |             1 |
+| AUTO_INCREMENT |             2 |
+| HELP COMMAND   |             3 |
+| TRUE           |             4 |
+| FALSE          |             5 |
+| BIT            |             6 |
+| TINYINT        |             7 |
+| BOOLEAN        |             8 |
+| SMALLINT       |             9 |
+| DATE           |            19 |
++----------------+---------------+
+11 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="计算次序">计算次序</h3>
+<p>where可以包含任意数目的and和or操作符，允许两者结合进行复杂和高级的过滤
+但是多个and 和 or会导致一个执行顺序的问题。
+默认情况下，and的优先级会高于or，所以and会先被执行
+如果我们想要or先执行，必须加入（）
+第一个例子里面加了（），意思是help_topic_id &lt;10 或者 name= date先选出来，再里面选择topic&gt;5的 行，所以结果都是&gt;5</p>
+<p>第二个例子里面没有加（）,意思是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where (help_topic_id &lt; 10 or name = &#39;date&#39;) and help_topic_id &gt;5 ;
++----------+---------------+
+| name     | help_topic_id |
++----------+---------------+
+| BIT      |             6 |
+| TINYINT  |             7 |
+| BOOLEAN  |             8 |
+| SMALLINT |             9 |
+| DATE     |            19 |
++----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; select name, help_topic_id from help_topic where help_topic_id &lt; 10 or name = &#39;date&#39; and help_topic_id &gt;5 ;  
++----------------+---------------+
+| name           | help_topic_id |
++----------------+---------------+
+| AUTO_INCREMENT |             2 |
+| BIT            |             6 |
+| BOOLEAN        |             8 |
+| DATE           |            19 |
+| FALSE          |             5 |
+| HELP COMMAND   |             3 |
+| HELP_DATE      |             0 |
+| HELP_VERSION   |             1 |
+| SMALLINT       |             9 |
+| TINYINT        |             7 |
+| TRUE           |             4 |
++----------------+---------------+
+11 rows in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>任何时候使用具有and 和 or的操作符，都应该用括号，来消除歧义</p>
+</blockquote>
+<h2 id="in操作符">IN操作符</h2>
+<p>括号在where子句中还有其他用法，用in操作符来确定范围的时候，可以包括在括号中。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -167,141 +314,19 @@
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
-</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id = 100;
-+----------+---------------+
-| name     | help_topic_id |
-+----------+---------------+
-| MAKE_SET |           100 |
-+----------+---------------+
-1 row in set (0.00 sec)
-
-mysql&gt; 
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id  in (10,20);
++-----------+---------------+
+| name      | help_topic_id |
++-----------+---------------+
+| MEDIUMINT |            10 |
+| DATETIME  |            20 |
++-----------+---------------+
+2 rows in set (0.00 sec)
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>注意这里过滤的数据类型是数值型，所以可以不用&rsquo;&rsquo;</p>
-</blockquote>
-<blockquote>
-<p>如果where和order by一起用的时候，要保证where在前，order by在后</p>
-</blockquote>
-<h2 id="where子句操作符">where子句操作符</h2>
-<table>
-<thead>
-<tr>
-<th>操作符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>=</td>
-<td>等于</td>
-</tr>
-<tr>
-<td>&lt;&gt;</td>
-<td>不等于</td>
-</tr>
-<tr>
-<td>!=</td>
-<td>不等于</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>小于</td>
-</tr>
-<tr>
-<td>&lt;=</td>
-<td>小于等于</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>大于</td>
-</tr>
-<tr>
-<td>&gt;=</td>
-<td>大于等于</td>
-</tr>
-<tr>
-<td>BETWEEN</td>
-<td>在两个值之间</td>
-</tr>
-</tbody>
-</table>
-<h3 id="检查单个值">检查单个值</h3>
-<h4 id="等于的操作">等于的操作</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">
-mysql&gt; select name,help_topic_id from help_topic where name = &#39;make_set&#39;;
-+----------+---------------+
-| name     | help_topic_id |
-+----------+---------------+
-| MAKE_SET |           100 |
-+----------+---------------+
-1 row in set (0.00 sec)
-
-mysql&gt; 
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="小于的操作">小于的操作</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id &lt; 10;
-+----------------+---------------+
-| name           | help_topic_id |
-+----------------+---------------+
-| HELP_DATE      |             0 |
-| HELP_VERSION   |             1 |
-| AUTO_INCREMENT |             2 |
-| HELP COMMAND   |             3 |
-| TRUE           |             4 |
-| FALSE          |             5 |
-| BIT            |             6 |
-| TINYINT        |             7 |
-| BOOLEAN        |             8 |
-| SMALLINT       |             9 |
-+----------------+---------------+
-10 rows in set (0.00 sec)
-
-mysql&gt; 
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="小于等于的操作">小于等于的操作</h4>
+</div><p>in的作用和or是相同的。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -325,29 +350,36 @@ mysql&gt;
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id &lt;=10;
-+----------------+---------------+
-| name           | help_topic_id |
-+----------------+---------------+
-| HELP_DATE      |             0 |
-| HELP_VERSION   |             1 |
-| AUTO_INCREMENT |             2 |
-| HELP COMMAND   |             3 |
-| TRUE           |             4 |
-| FALSE          |             5 |
-| BIT            |             6 |
-| TINYINT        |             7 |
-| BOOLEAN        |             8 |
-| SMALLINT       |             9 |
-| MEDIUMINT      |            10 |
-+----------------+---------------+
-11 rows in set (0.00 sec)
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id  in (10,20);
++-----------+---------------+
+| name      | help_topic_id |
++-----------+---------------+
+| MEDIUMINT |            10 |
+| DATETIME  |            20 |
++-----------+---------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; select name, help_topic_id from help_topic where help_topic_id=10 or help_topic_id=20;
++-----------+---------------+
+| name      | help_topic_id |
++-----------+---------------+
+| MEDIUMINT |            10 |
+| DATETIME  |            20 |
++-----------+---------------+
+2 rows in set (0.00 sec)
 
 mysql&gt; 
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="不匹配检查">不匹配检查</h3>
-<p>看到这里没有匹配到10</p>
+</div><p>为什么要用in操作符呢，优点如下：</p>
+<ol>
+<li>in操作符的语法更清晰直观</li>
+<li>在使用in时，计算的次序更容易管理。</li>
+<li>in比or执行速度更快</li>
+<li>可以包含其他select语句，使得能够更动态的建立where子句</li>
+</ol>
+<h2 id="not操作符">NOT操作符</h2>
+<p>not的作用是否定它之后所跟的任何条件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -376,11 +408,9 @@ mysql&gt;
 </span><span class="lnt">24
 </span><span class="lnt">25
 </span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id &lt;&gt;10 limit 20;
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name, help_topic_id from help_topic where help_topic_id not in (10,20) limit 20;
 +------------------+---------------+
 | name             | help_topic_id |
 +------------------+---------------+
@@ -403,140 +433,13 @@ mysql&gt;
 | DOUBLE           |            17 |
 | DOUBLE PRECISION |            18 |
 | DATE             |            19 |
-| DATETIME         |            20 |
+| TIMESTAMP        |            21 |
 +------------------+---------------+
-20 rows in set (0.00 sec)
-
-mysql&gt; 
+20 rows in set (0.0)
 </code></pre></td></tr></table>
 </div>
-</div><p>使用!= ，效果是一样的</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id !=10 limit 20;  
-+------------------+---------------+
-| name             | help_topic_id |
-+------------------+---------------+
-| HELP_DATE        |             0 |
-| HELP_VERSION     |             1 |
-| AUTO_INCREMENT   |             2 |
-| HELP COMMAND     |             3 |
-| TRUE             |             4 |
-| FALSE            |             5 |
-| BIT              |             6 |
-| TINYINT          |             7 |
-| BOOLEAN          |             8 |
-| SMALLINT         |             9 |
-| INT              |            11 |
-| INTEGER          |            12 |
-| BIGINT           |            13 |
-| DECIMAL          |            14 |
-| DEC              |            15 |
-| FLOAT            |            16 |
-| DOUBLE           |            17 |
-| DOUBLE PRECISION |            18 |
-| DATE             |            19 |
-| DATETIME         |            20 |
-+------------------+---------------+
-20 rows in set (0.00 sec)
+</div><p>用于较为复杂的句型中，可以反向匹配。</p>
 
-mysql&gt; 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="检索一定范围">检索一定范围</h3>
-<p>使用between来确定范围,用between的时候需要确定最高和最低值，并且用and来连接，在输出的时候，最高和最低值都会被显示出来。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id between 10 and 20;
-+------------------+---------------+
-| name             | help_topic_id |
-+------------------+---------------+
-| MEDIUMINT        |            10 |
-| INT              |            11 |
-| INTEGER          |            12 |
-| BIGINT           |            13 |
-| DECIMAL          |            14 |
-| DEC              |            15 |
-| FLOAT            |            16 |
-| DOUBLE           |            17 |
-| DOUBLE PRECISION |            18 |
-| DATE             |            19 |
-| DATETIME         |            20 |
-+------------------+---------------+
-11 rows in set (0.00 sec)
-
-mysql&gt; 
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="检查空值">检查空值</h3>
-<p>在一个列里面不包含值， 称为空值 NULL
-在我的例子里面因为id不可能为空，所以查出来是空。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select name,help_topic_id from help_topic where help_topic_id is null;
-Empty set (0.00 sec)
-
-mysql&gt; 
-</code></pre></td></tr></table>
-</div>
-</div>
     </div>
 
     <div class="post-copyright">
@@ -547,7 +450,7 @@ mysql&gt;
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-        2020-04-01
+        2020-04-02
         
     </span>
   </p>
@@ -561,13 +464,13 @@ mysql&gt;
           <a href="/tags/it/">IT</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/20200402mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%83%E7%AB%A0/">
+        <a class="prev" href="/post/20200403mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AB%E7%AB%A0/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">[MYSQL必知必会学习笔记]第七章:数据过滤</span>
+            <span class="prev-text nav-default">[MYSQL必知必会学习笔记]第八章:用通配符进行过滤</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
-        <a class="next" href="/post/20200331mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%94%E7%AB%A0/">
-            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第五章:排序检索数据</span>
+        <a class="next" href="/post/20200401mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%85%AD%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第六章:过滤数据</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
