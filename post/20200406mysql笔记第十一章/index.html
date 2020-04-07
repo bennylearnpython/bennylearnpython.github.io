@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第十一章:使用数据处理函数 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="使用数据处理函数 函数 和大部分计算机语言一样 sql也支持函数来处理数据 函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。 所以为了代码" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200406mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第十一章:使用数据处理函数" />
+<meta property="og:description" content="使用数据处理函数 函数 和大部分计算机语言一样 sql也支持函数来处理数据 函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。 所以为了代码" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200406mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-06T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-06T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第十一章:使用数据处理函数">
+<meta itemprop="description" content="使用数据处理函数 函数 和大部分计算机语言一样 sql也支持函数来处理数据 函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。 所以为了代码">
+<meta itemprop="datePublished" content="2020-04-06T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-06T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="1866">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第十一章:使用数据处理函数"/>
+<meta name="twitter:description" content="使用数据处理函数 函数 和大部分计算机语言一样 sql也支持函数来处理数据 函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。 所以为了代码"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第十一章:使用数据处理函数</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-06 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#函数">函数</a></li>
+    <li><a href="#使用函数">使用函数</a>
+      <ul>
+        <li><a href="#文本处理函数">文本处理函数</a></li>
+        <li><a href="#日期和时间的处理函数">日期和时间的处理函数</a></li>
+        <li><a href="#数值处理函数">数值处理函数</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s1.ax1x.com/2020/04/07/Gg0Ei8.png" alt="使用数据处理函数"></p>
+<h1 id="使用数据处理函数">使用数据处理函数</h1>
+<h2 id="函数">函数</h2>
+<p>和大部分计算机语言一样 sql也支持函数来处理数据
+函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。
+所以为了代码可移植性，程序员不赞成使用函数。</p>
+<h2 id="使用函数">使用函数</h2>
+<p>大多数sql实现支持以下类型的函数：</p>
+<ol>
+<li>用于处理文本串的文本函数</li>
+<li>用于数值数据上的数值函数</li>
+<li>用于处理日期和时间的日期时间函数</li>
+<li>返回DBMS正使用的特殊信息的系统函数</li>
+</ol>
+<h3 id="文本处理函数">文本处理函数</h3>
+<p>upper() 把文字转为大写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select help_category_id , upper(name) as name_upcase from help_category;
++------------------+---------------------------------------+
+| help_category_id | name_upcase                           |
++------------------+---------------------------------------+
+|               37 | ACCOUNT MANAGEMENT                    |
+|                3 | ADMINISTRATION                        |
+|               15 | BIT FUNCTIONS                         |
+|                9 | COMPARISON OPERATORS                  |
+|               40 | COMPONENTS                            |
+|               36 | COMPOUND STATEMENTS                   |
+|                0 | CONTENTS                              |
+|               11 | CONTROL FLOW FUNCTIONS                |
+|               33 | DATA DEFINITION                       |
+|               34 | DATA MANIPULATION                     |
+|                2 | DATA TYPES                            |
+|               14 | DATE AND TIME FUNCTIONS               |
+|               16 | ENCRYPTION FUNCTIONS                  |
+|                8 | FUNCTIONS                             |
+|                5 | GEOGRAPHIC FEATURES                   |
+|               22 | GEOMETRY CONSTRUCTORS                 |
+|               23 | GEOMETRY PROPERTY FUNCTIONS           |
+|               28 | GEOMETRY RELATION FUNCTIONS           |
+|               27 | GEOMETRYCOLLECTION PROPERTY FUNCTIONS |
+|               30 | GROUP BY FUNCTIONS AND MODIFIERS      |
+|                1 | HELP METADATA                         |
+|               18 | INFORMATION FUNCTIONS                 |
+|                4 | LANGUAGE STRUCTURE                    |
+|               25 | LINESTRING PROPERTY FUNCTIONS         |
+|               17 | LOCKING FUNCTIONS                     |
+|               10 | LOGICAL OPERATORS                     |
+|                6 | MBR                                   |
+|               29 | MBR FUNCTIONS                         |
+|               32 | MISCELLANEOUS FUNCTIONS               |
+|               13 | NUMERIC FUNCTIONS                     |
+|               31 | PERFORMANCE SCHEMA FUNCTIONS          |
+|               41 | PLUGINS                               |
+|               24 | POINT PROPERTY FUNCTIONS              |
+|               26 | POLYGON PROPERTY FUNCTIONS            |
+|               19 | SPATIAL FUNCTIONS                     |
+|               43 | STORAGE ENGINES                       |
+|               12 | STRING FUNCTIONS                      |
+|               38 | TABLE MAINTENANCE                     |
+|               35 | TRANSACTIONS                          |
+|               39 | USER-DEFINED FUNCTIONS                |
+|               42 | UTILITY                               |
+|               21 | WKB FUNCTIONS                         |
+|                7 | WKT                                   |
+|               20 | WKT FUNCTIONS                         |
++------------------+---------------------------------------+
+44 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>常用的文本处理函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left()</td>
+<td>返回串左边的字符</td>
+</tr>
+<tr>
+<td>Length()</td>
+<td>返回串长度</td>
+</tr>
+<tr>
+<td>Locate()</td>
+<td>找出串的一个字串</td>
+</tr>
+<tr>
+<td>Lower()</td>
+<td>将串转换成小写</td>
+</tr>
+<tr>
+<td>Trim()</td>
+<td>去掉左右两边的空格</td>
+</tr>
+<tr>
+<td>LTrim()</td>
+<td>去掉左边的空格</td>
+</tr>
+<tr>
+<td>RTrim()</td>
+<td>去掉右边的空格</td>
+</tr>
+<tr>
+<td>Right()</td>
+<td>返回串右边的字符</td>
+</tr>
+<tr>
+<td>Soundex()</td>
+<td>返回串的soundex值</td>
+</tr>
+<tr>
+<td>SubString()</td>
+<td>返回字串的字符</td>
+</tr>
+<tr>
+<td>upper()</td>
+<td>串转换成大写</td>
+</tr>
+</tbody>
+</table>
+<p>soundex()需要进一步解释。soundex是将文本串转换成为描述其语言表示的字母数字的模式的算法。
+就是说soundex比较的串的发音而不是字母比较。</p>
+<h3 id="日期和时间的处理函数">日期和时间的处理函数</h3>
+<p><strong>常用的日期和时间的处理函数</strong>
+| 函数        | 说明          | 
+| &mdash;&mdash;&ndash;   | &mdash;&mdash;&mdash;&ndash;   | 
+|    adddate()      |    增加一个日期   |<br>
+|   addtime()      | 增加一个时间   |<br>
+| curdate()       | 返回当前日期     |<br>
+| curtime()       | 返回当前时间  |<br>
+|    date()     |    返回日期时间的日期部分   |<br>
+|   dateDiff()     | 计算日期之差    |<br>
+| Date_add()     | 高度灵活的日期运算函数     |<br>
+| date_format()    | 返回一个格式化的日期或时间串    |<br>
+|   day()    |    返回一个日期的天数   |<br>
+|   dayofweek()    | 对于一个日期，返回星期几   |<br>
+| hour()     | 返回小时部分    |<br>
+|   minute()     |    返回分钟部分  |<br>
+|   month()      | 返回月部分   |<br>
+| now()       | 返回当前日期和时间     |<br>
+| Second()       | 返回秒部分   |<br>
+|   time()   |    返回日期时间的时间部分   |<br>
+| year()    | 返回年份部分    |</p>
+<p>这里找不到一个tables有日期的记录。
+所以<a href="https://launchpad.net/test-db/employees-db-1/1.0.6">下载数据库文件</a> 通过命令mysql -uroot -p -t &lt; employees.sql载入
+注意下载的是一个tar.bz2的文件，要解加压缩，然后修改修改employees.sql中的
+set storage_engine = InnoDB;改为set default_storage_engine = InnoDB;（有3处需要修改）</p>
+<p>基本的日期查询：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select concat(first_name,&#39; &#39;,last_name) as name , birth_date from employees where birth_date = &#39;1952-02-22&#39; limit 20;
++--------------------+------------+
+| name               | birth_date |
++--------------------+------------+
+| Kazuhisa Versino   | 1952-02-22 |
+| Mahendra Pollacia  | 1952-02-22 |
+| Pantung Smeets     | 1952-02-22 |
+| Michaela Matzat    | 1952-02-22 |
+| Renee Kaminger     | 1952-02-22 |
+| JoAnne Serov       | 1952-02-22 |
+| Tse Oxman          | 1952-02-22 |
+| Nechama Waymire    | 1952-02-22 |
+| Dannz Masand       | 1952-02-22 |
+| Wojceich Back      | 1952-02-22 |
+| Baziley Peris      | 1952-02-22 |
+| Saniya Rosca       | 1952-02-22 |
+| Piyush Ritzmann    | 1952-02-22 |
+| Kamakshi Aseltine  | 1952-02-22 |
+| Xiping Koblick     | 1952-02-22 |
+| Martine Eastman    | 1952-02-22 |
+| Gudjon Thambidurai | 1952-02-22 |
+| Fumiyo Krybus      | 1952-02-22 |
+| Mansur Miara       | 1952-02-22 |
+| Isaac Yetim        | 1952-02-22 |
++--------------------+------------+
+20 rows in set (0.02 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>如果我们只想知道是2月22号生日的人呢，不需要年份的时候，我们可以用一些日期函数来实现。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select concat(first_name,&#39; &#39;,last_name) as name , birth_date from employees where month(birth_date)=2 and day(birth_date)=22 limit 20;                  
++----------------------+------------+
+| name                 | birth_date |
++----------------------+------------+
+| Lunjin Ozeri         | 1964-02-22 |
+| Pranas Benaini       | 1962-02-22 |
+| Utz Perng            | 1963-02-22 |
+| Billur Herbst        | 1964-02-22 |
+| Nagui Kaminger       | 1957-02-22 |
+| Godehard Plotkin     | 1955-02-22 |
+| Xuejun Heydon        | 1961-02-22 |
+| Mark Setlzner        | 1961-02-22 |
+| Aimee Brookner       | 1955-02-22 |
+| Slavian Guerreiro    | 1956-02-22 |
+| Naftali Lukaszewicz  | 1954-02-22 |
+| Kazuhisa Versino     | 1952-02-22 |
+| Kensei Takkinen      | 1958-02-22 |
+| Bernardo Plavsic     | 1959-02-22 |
+| Stepehn Pocchiola    | 1954-02-22 |
+| Xuedong Gelosh       | 1955-02-22 |
+| Kenroku Gulla        | 1959-02-22 |
+| Heon Baak            | 1958-02-22 |
+| Qingxiang Brickell   | 1962-02-22 |
+| Yolla Theuretzbacher | 1956-02-22 |
++----------------------+------------+
+20 rows in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>输出一个日期范围：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select concat(first_name,&#39; &#39;,last_name) as name , birth_date from employees where date(birth_date) between &#39;1958-2-22&#39; and &#39;1958-2-23&#39; limit 20;
++--------------------+------------+
+| name               | birth_date |
++--------------------+------------+
+| Tadahiro Tibblin   | 1958-02-23 |
+| Lene Chelton       | 1958-02-23 |
+| Kensei Takkinen    | 1958-02-22 |
+| Tadahiko Stamatiou | 1958-02-23 |
+| Heon Baak          | 1958-02-22 |
+| Barna Wilfing      | 1958-02-23 |
+| Shushma Velasco    | 1958-02-22 |
+| Ottavia Schnelling | 1958-02-23 |
+| Erzsebet Piazza    | 1958-02-23 |
+| Richara Conry      | 1958-02-22 |
+| Akeel Dahlbom      | 1958-02-22 |
+| Xuejia Mundy       | 1958-02-22 |
+| Ingemar Ghalwash   | 1958-02-22 |
+| Lidong Bernick     | 1958-02-22 |
+| Sushant Thummel    | 1958-02-23 |
+| Martina Pocchiola  | 1958-02-22 |
+| Masaki Lupu        | 1958-02-22 |
+| Huican Boudaillier | 1958-02-23 |
+| Along Nishimukai   | 1958-02-23 |
+| Sachem Bolotov     | 1958-02-23 |
++--------------------+------------+
+20 rows in set (0.01 sec)
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="数值处理函数">数值处理函数</h3>
+<p>数值处理函数仅仅处理数值数据，主要用于代数，三角和几何运算，因此没有串或者时间-日期处理函数这么频繁使用
+但是在DBMS中反而是最统一的。</p>
+<p><strong>常用数值处理函数</strong>
+| 函数        | 说明          | 
+| &mdash;&mdash;&ndash;   | &mdash;&mdash;&mdash;&ndash;   | 
+|    abs()      |    一个数的绝对值   |<br>
+|   cos()      | 角度的余弦  |<br>
+| exp()       | 一个数的指数     |<br>
+| mod()       | 除操作的余数  |<br>
+|    pi()     |    返回圆周率   |<br>
+|   rand()     | 一个随机数    |<br>
+| sin()     | 一个角度的正弦     |<br>
+| sqrt()    | 一个数的平方根    |<br>
+|   tan()    |    一个角度的正切  |</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-06
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第十章:创建计算字段</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

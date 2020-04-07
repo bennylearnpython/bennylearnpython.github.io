@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>[MYSQL必知必会学习笔记]第十一章:使用数据处理函数</title>
+      <link>https://bennylearnpython.github.io/post/20200406mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/</link>
+      <pubDate>Mon, 06 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200406mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/</guid>
+      <description>使用数据处理函数 函数 和大部分计算机语言一样 sql也支持函数来处理数据 函数的在每个DBMS里面的不太相同，因此可移植性并不是很好。 所以为了代码</description>
+    </item>
+    
+    <item>
       <title>[MYSQL必知必会学习笔记]第十章:创建计算字段</title>
       <link>https://bennylearnpython.github.io/post/20200405mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E7%AB%A0/</link>
       <pubDate>Sun, 05 Apr 2020 01:37:56 +0800</pubDate>
