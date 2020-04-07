@@ -48,7 +48,7 @@
 <meta itemprop="description" content="正则表达式介绍 正则表达式是用来匹配文本的特殊的串 正则表达式是通用的。 使用mysql正则表达式 mysql支持的正则表达式仅为正则表达式语言中的">
 <meta itemprop="datePublished" content="2020-04-04T01:37:56&#43;08:00" />
 <meta itemprop="dateModified" content="2020-04-04T01:37:56&#43;08:00" />
-<meta itemprop="wordCount" content="2740">
+<meta itemprop="wordCount" content="2714">
 
 
 
@@ -696,15 +696,41 @@ mysql&gt;
 </table>
 <h3 id="匹配多个实例">匹配多个实例</h3>
 <p>多次匹配或者组合匹配
-<strong>重复元字符</strong>
-| 元字符          | 说明          | 
-| &mdash;&mdash;&ndash;   | &mdash;&mdash;&mdash;&ndash;   | 
-|    *     |    0个或多个匹配     |<br>
-|    +      | 1个或多个匹配     |<br>
-| ?      | 0个或1个匹配     |<br>
-| {n}      | 指定数目的匹配     |<br>
-| {n,}     | 不少于指定数目的范围    |<br>
-| {n,m}       | 匹配数目的范围      |</p>
+<strong>重复元字符</strong></p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>0个或多个匹配</td>
+</tr>
+<tr>
+<td>+</td>
+<td>1个或多个匹配</td>
+</tr>
+<tr>
+<td>?</td>
+<td>0个或1个匹配</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>指定数目的匹配</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>不少于指定数目的范围</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>匹配数目的范围</td>
+</tr>
+</tbody>
+</table>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
