@@ -6,10 +6,19 @@
     <description>Recent content in IT on Benny&#39;s BLOG</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 06 Apr 2020 01:37:56 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2020 01:37:56 +0800</lastBuildDate>
     
 	<atom:link href="https://bennylearnpython.github.io/tags/it/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[MYSQL必知必会学习笔记]第十二章:汇总数据</title>
+      <link>https://bennylearnpython.github.io/post/20200407mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0/</link>
+      <pubDate>Tue, 07 Apr 2020 01:37:56 +0800</pubDate>
+      
+      <guid>https://bennylearnpython.github.io/post/20200407mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0/</guid>
+      <description>汇总数据 聚集函数 我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表 这种类型的检索例子有以下几种： 确定</description>
+    </item>
     
     <item>
       <title>[MYSQL必知必会学习笔记]第十一章:使用数据处理函数</title>

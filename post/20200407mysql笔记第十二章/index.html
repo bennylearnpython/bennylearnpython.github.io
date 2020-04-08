@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>[MYSQL必知必会学习笔记]第十二章:汇总数据 - Benny&#39;s BLOG</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Benny" /><meta name="description" content="汇总数据 聚集函数 我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表 这种类型的检索例子有以下几种： 确定" /><meta name="keywords" content="Hugo, theme, even" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="https://bennylearnpython.github.io/post/20200407mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="[MYSQL必知必会学习笔记]第十二章:汇总数据" />
+<meta property="og:description" content="汇总数据 聚集函数 我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表 这种类型的检索例子有以下几种： 确定" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bennylearnpython.github.io/post/20200407mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0/" />
+<meta property="article:published_time" content="2020-04-07T01:37:56+08:00" />
+<meta property="article:modified_time" content="2020-04-07T01:37:56+08:00" />
+<meta itemprop="name" content="[MYSQL必知必会学习笔记]第十二章:汇总数据">
+<meta itemprop="description" content="汇总数据 聚集函数 我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表 这种类型的检索例子有以下几种： 确定">
+<meta itemprop="datePublished" content="2020-04-07T01:37:56&#43;08:00" />
+<meta itemprop="dateModified" content="2020-04-07T01:37:56&#43;08:00" />
+<meta itemprop="wordCount" content="607">
+
+
+
+<meta itemprop="keywords" content="mysql,学习笔记,IT," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[MYSQL必知必会学习笔记]第十二章:汇总数据"/>
+<meta name="twitter:description" content="汇总数据 聚集函数 我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表 这种类型的检索例子有以下几种： 确定"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Benny&#39;s BLOG</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Benny&#39;s BLOG</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">[MYSQL必知必会学习笔记]第十二章:汇总数据</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-04-07 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"> 学习笔记 </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#聚集函数">聚集函数</a>
+      <ul>
+        <li><a href="#avg函数">AVG函数</a></li>
+        <li><a href="#count函数">count函数</a></li>
+        <li><a href="#max函数">MAX函数</a></li>
+        <li><a href="#min函数">MIN函数</a></li>
+        <li><a href="#sum函数">sum函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#组合聚集">组合聚集</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <p><img src="https://s1.ax1x.com/2020/04/08/GWEXqA.png" alt="汇总数据"></p>
+<h1 id="汇总数据">汇总数据</h1>
+<h2 id="聚集函数">聚集函数</h2>
+<p>我们经常需要汇总数据而不是把他们实际检索出来。mysql查询可以用于检索数据，以便分析报表
+这种类型的检索例子有以下几种：</p>
+<ol>
+<li>确定表中行数</li>
+<li>获得表中行组的和</li>
+<li>找到表列最大值，最小值和平均值</li>
+</ol>
+<p><strong>聚集函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVG()</td>
+<td>返回某列平均值</td>
+</tr>
+<tr>
+<td>COUNT()</td>
+<td>返回某列行数</td>
+</tr>
+<tr>
+<td>MAX()</td>
+<td>返回某列最大值</td>
+</tr>
+<tr>
+<td>MIN()</td>
+<td>返回某列最小值</td>
+</tr>
+<tr>
+<td>SUM()</td>
+<td>返回某列之和</td>
+</tr>
+</tbody>
+</table>
+<h3 id="avg函数">AVG函数</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select AVG(salary) as avg_salary from salaries;         
++------------+
+| avg_salary |
++------------+
+| 63810.7448 |
++------------+
+1 row in set (0.54 sec)
+
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以针对特定的列来作平均</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select AVG(salary) as avg_salary from salaries where emp_no=10001;
++------------+
+| avg_salary |
++------------+
+| 75388.9412 |
++------------+
+1 row in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="count函数">count函数</h3>
+<p>count可以计数，知道行的数量
+count的两种使用方法：</p>
+<ol>
+<li>使用count（*）对表中行的数量进行计数，不管表列中包含的是空还是非空</li>
+<li>使用count对特定列中具有值的行进行计数，忽略null</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select count(*) as num_salary from salaries;
++------------+
+| num_salary |
++------------+
+|    2844047 |
++------------+
+1 row in set (0.14 sec)
+</code></pre></td></tr></table>
+</div>
+</div><p>利用count（*）来对所有行计数</p>
+<h3 id="max函数">MAX函数</h3>
+<p>返回最大值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select MAX(salary) as max_salary from salaries;       
++------------+
+| max_salary |
++------------+
+|     158220 |
++------------+
+1 row in set (0.45 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="min函数">MIN函数</h3>
+<p>返回最小值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">
+mysql&gt; select min(salary) as min_salary from salaries;       
++------------+
+| min_salary |
++------------+
+|      38623 |
++------------+
+1 row in set (0.46 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="sum函数">sum函数</h3>
+<p>返回一列的和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select sum(salary) as sum_salary from salaries;      
++--------------+
+| sum_salary   |
++--------------+
+| 181480757419 |
++--------------+
+1 row in set (0.53 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><p>返回特定列的和</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select sum(salary) as sum_salary from salaries where emp_no=10001;
++------------+
+| sum_salary |
++------------+
+|    1281612 |
++------------+
+1 row in set (0.00 sec)
+
+mysql&gt; 
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="组合聚集">组合聚集</h2>
+<p>指select语句中呈现多个聚集函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">mysql&gt; select AVG(salary) as avg_salary, MAX(salary) as max_salary, MIN(salary) as min_salary from salaries where emp_no=10001;         
++------------+------------+------------+
+| avg_salary | max_salary | min_salary |
++------------+------------+------------+
+| 75388.9412 |      88958 |      60117 |
++------------+------------+------------+
+1 row in set (0.00 sec)
+</code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">Benny</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-04-07
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/mysql/">mysql</a>
+          <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
+          <a href="/tags/it/">IT</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/20200406mysql%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0/">
+            <span class="next-text nav-default">[MYSQL必知必会学习笔记]第十一章:使用数据处理函数</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hgj222@hotmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://weibo.com/u/1980197811/home?wvr=5" class="iconfont icon-weibo" title="weibo"></a>
+      <a href="https://www.douban.com/people/3224119/" class="iconfont icon-douban" title="douban"></a>
+      <a href="https://www.instagram.com/hgj222/" class="iconfont icon-instagram" title="instagram"></a>
+  <a href="https://bennylearnpython.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Benny hu</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
